@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # StudyBetter
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.28.3.
@@ -29,3 +30,7 @@ Run `ng github-pages:deploy` to deploy to GitHub Pages.
 ## Further help
 
 To get more help on the `angular-cli` use `ng help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+=======
+# study-better
+A website to help everyone study better
+>>>>>>> 52161a324e16cce8bc3de9e79d510e81fd2a3ce1

@@ -17,7 +17,7 @@ export class AppComponent
 	constructor()
 	{
 		this.factSet.facts[0].props[0] = "LAJLFAJSLKFJA";
-		this.factSet.facts[1].props[1] = "f";
+		this.factSet.facts[1].props[1] = "fa";
 	}
 	
 	onSelect(fact: Fact): void

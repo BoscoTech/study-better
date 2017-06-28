@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Google font. URL: https://fonts.google.com/specimen/Quicksand */
+@import url(https://fonts.googleapis.com/css?family=Quicksand);
+/* Material design color pallette. URL: https://www.materialpalette.com/light-green/indigo */
+@import 'palette.css';
+
+body
+{
+	font-family: 'Quicksand';
+}

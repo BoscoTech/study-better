@@ -14,6 +14,12 @@ export class AppComponent
 	factSet = new FactSet(3, 10);
 	selected: Fact;
 	
+	constructor()
+	{
+		this.factSet.facts[0].props[0] = "LAJLFAJSLKFJA";
+		this.factSet.facts[1].props[1] = "f";
+	}
+	
 	onSelect(fact: Fact): void
 	{
 		this.selected = fact;

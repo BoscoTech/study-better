@@ -1,5 +1,5 @@
 <h1>
-  {{title}}
+  Terms:
 </h1>
 
 <div *ngIf="selected">
@@ -8,9 +8,4 @@
 	</h2>
 </div>
 
-<ul class="facts">
-	<li *ngFor="let fact of factSet.facts" (click)="onSelect(fact)">
-		<span class="term">{{fact.props[0]}}:</span> {{fact.props[1]}}
-	</li>
-</ul>
-
+<fact-set-disp [factSet]="factSet"></fact-set-disp>

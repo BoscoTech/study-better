@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { FactSetDispComponent } from './fact/fact-set-disp/fact-set-disp.component';
+import { FactSetService } from './fact/fact-set.service';
 
 @NgModule
 ({
@@ -19,7 +20,7 @@ import { FactSetDispComponent } from './fact/fact-set-disp/fact-set-disp.compone
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [FactSetService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

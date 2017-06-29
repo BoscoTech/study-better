@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Fact, Column, FactSet } from './fact/fact-data';
+import { FactSetService } from './fact/fact-set.service';
 
 @Component
 ({
@@ -8,16 +9,20 @@ import { Fact, Column, FactSet } from './fact/fact-data';
 	styleUrls: ['./app.component.css']
 })
 
-export class AppComponent 
+export class AppComponent implements OnInit
 {
 	title = 'app works!';
-	factSet = new FactSet(3, 10);
+	factSet: FactSet;
 	selected: Fact;
 	
-	constructor()
+	constructor(private factSetService: FactSetService)
 	{
-		this.factSet.facts[0].props[0] = "LAJLFAJSLKFJA";
-		this.factSet.facts[1].props[1] = "fa";
+		
+	}
+	
+	ngOnInit(): void
+	{
+		this.factSetService.getFactSet().then(factSet => this.factSet = factSet); //Grab the data from the promise, once it's done.
 	}
 	
 	onSelect(fact: Fact): void

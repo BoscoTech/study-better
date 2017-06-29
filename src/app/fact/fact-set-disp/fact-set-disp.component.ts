@@ -12,15 +12,22 @@ import { Fact, FactSet } from '../fact-data';
 export class FactSetDispComponent
 {
 	@Input() factSet: FactSet;
-	selected: Fact;
+	readonly COLUMN_HEADER_SELECTED = 1;
+	selected: any;
 	
-	select(fact: Fact): void
+	select(selected: any): void
 	{
-		this.selected = fact;
+		this.selected = selected;
 	}
 	
 	trackByIndex(index: number, obj: any): any
 	{
 		return index;
+	}
+	
+	newFact(): void
+	{
+		this.factSet.append();
+		this.select(null);
 	}
 }

@@ -13,7 +13,6 @@ export class AppComponent implements OnInit
 {
 	title = 'app works!';
 	factSet: FactSet;
-	selected: Fact;
 	
 	constructor(private factSetService: FactSetService)
 	{
@@ -23,10 +22,5 @@ export class AppComponent implements OnInit
 	ngOnInit(): void
 	{
 		this.factSetService.getFactSet().then(factSet => this.factSet = factSet); //Grab the data from the promise, once it's done.
-	}
-	
-	onSelect(fact: Fact): void
-	{
-		this.selected = fact;
 	}
 }

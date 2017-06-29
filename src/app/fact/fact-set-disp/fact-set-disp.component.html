@@ -1,12 +1,57 @@
 <ul class="fact-list">
+	<li>	
+		<div class="column-header" (click)="select(COLUMN_HEADER_SELECTED)" [class.selected]="selected === COLUMN_HEADER_SELECTED">
+			<div>
+				<ul class="hlist">
+					<li *ngFor="let col of factSet.columns; let i = index; trackBy:trackByIndex">
+						<input [(ngModel)]="factSet.columns[i].name" placeholder="column name">
+					</li>
+				</ul>
+			</div>
+			<div>
+				<ul class="hlist">
+					<li *ngFor="let col of factSet.columns; let i = index; trackBy:trackByIndex">
+						<span>
+							<select>
+								<option value="plainText">Plain Text</option>
+								<option value="chemical">Chemical Formula</option>
+								<option value="reaction">Chemical Reaction</option>
+							</select>
+						</span>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<ul class="hlist">
+					<li *ngFor="let col of factSet.columns; let i = index; trackBy:trackByIndex">
+						<span class="nav-button-box">
+							<img class="nav-button" (click)="factSet.moveLeft(i)" src="assets/navigation/left_min.svg" alt="move left" [class.active]="i>0">
+							<img class="nav-button" (click)="factSet.moveRight(i)" src="assets/navigation/right_min.svg" alt="move right" [class.active]="i<factSet.columns.length-1">
+							<img class="nav-button active" src="assets/navigation/cancel.svg" alt="delete">
+							<img class="nav-button active" src="assets/navigation/add.svg" alt="add right">
+						</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</li>
 	<li *ngFor="let fact of factSet.facts; let fi = index">
 		<div class="fact" [class.selected]="selected === fact">
-			<ul class="fact-prop-list" (click)="select(fact)">
-				<li *ngFor="let prop of fact.props; let i = index; trackBy:trackByIndex"><input [(ngModel)]="fact.props[i]" placeholder="property"></li>
+			<ul class="hlist" (click)="select(fact)">
+				<li *ngFor="let prop of fact.props; let i = index; trackBy:trackByIndex">
+					<input [(ngModel)]="fact.props[i]" placeholder="property">
+				</li>
 			</ul>
-			<img class="nav-button" src="assets/navigation/up_min.svg" alt="move up">
-			<img class="nav-button" src="assets/navigation/down_min.svg" alt="move down">
-			<img class="nav-button" src="assets/navigation/cancel.svg" alt="delete">
+			<span class="nav-button-box">
+				<img class="nav-button" (click)="factSet.moveUp(fi)" src="assets/navigation/up_min.svg" alt="move up" [class.active]="fi>0">
+				<img class="nav-button" (click)="factSet.moveDown(fi)" src="assets/navigation/down_min.svg" alt="move down" [class.active]="fi<factSet.facts.length-1">
+				<img class="nav-button active" (click)="factSet.remove(fi)" src="assets/navigation/cancel.svg" alt="delete">
+			</span>
 		</div>
+	</li>
+	<li>
+		<span id="new-fact" (click)="newFact()">
+			+ New Fact +
+		</span>
 	</li>
 </ul>

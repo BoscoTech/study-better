@@ -9,6 +9,61 @@ ul.fact-list > li
 	padding: 4px 0;
 }
 
+div.column-header
+{
+	height: 2em;
+	overflow: hidden;
+	display: inline-block;
+	background-color: #DDD;
+	border-radius: 8px;
+	transition: background-color .3s, height .2s;
+}
+
+div.column-header:hover
+{
+	background-color: var(--default-primary-color);
+	transition: background-color .1s, height .2s;
+}
+
+div.column-header.selected
+{
+	height: 6em;
+	overflow: hidden;
+	background-color: var(--light-primary-color);
+	transition: background-color .01s, height .2s;
+}
+
+div.column-header select
+{
+	width: 100%;
+	height: 100%;
+}
+
+ul.hlist
+{
+	list-style-type: none;
+	padding: 0;	
+}
+
+ul.hlist > li
+{
+	display: inline-block;
+	border-right: 1px solid var(--divider-color)	
+}
+
+ul.hlist > li:last-child
+{
+	border-right: 0;
+}
+
+ul.hlist > li > *
+{
+	display: inline-block;
+	padding: .5em 1em;
+	width: 10em;
+	height: 1em;
+}
+
 div.fact
 {
 	height: 2em;
@@ -16,13 +71,13 @@ div.fact
 	display: inline-block;
 	background-color: #EEE;
 	border-radius: 8px;
-	transition: background-color .3s, height .5s;
+	transition: background-color .3s, height .2s;
 }
 
 div.fact:hover
 {
 	background-color: var(--default-primary-color);
-	transition: background-color .1s, height .5s;
+	transition: background-color .1s, height .2s;
 }
 
 div.fact.selected
@@ -30,7 +85,7 @@ div.fact.selected
 	height: 4em;
 	overflow: hidden;
 	background-color: var(--light-primary-color);
-	transition: background-color .1s, height .5s;
+	transition: background-color .1s, height .2s;
 }
 
 img.nav-button
@@ -38,7 +93,7 @@ img.nav-button
 	width: 1.6em;
 	height: 1.6em;
 	text-align: right;
-	padding: .2em .8em .2em;
+	padding: 0;
 	opacity: 0.5;
 	transition: opacity 0.2s;
 }
@@ -55,21 +110,16 @@ img.nav-button:active
 	transition: opacity 0.01s;
 }
 
+img.nav-button:not(.active)
+{
+	cursor: default;
+	opacity: 0.2;
+}
+
 ul.fact-prop-list
 {
 	list-style-type: none;
 	padding: 0 0;	
-}
-
-ul.fact-prop-list li
-{
-	display: inline-block;
-	border-right: 1px solid var(--divider-color)
-}
-
-ul.fact-prop-list li:last-child
-{
-	border-right: 0;
 }
 
 ul.fact-prop-list li *
@@ -88,4 +138,43 @@ ul.fact-prop-list input:hover
 ul.fact-prop-list input:focus
 {
 	cursor: text;
+}
+
+#new-fact
+{
+	display: inline-block;
+	width: 10em;
+	line-height: 1em;
+	padding: .5em 1em;
+	background-color: #EEE;
+	border-radius: 8px;
+	transition: background-color .3s, height .5s;
+	text-align: center;
+	transition: background-color .3s;
+	user-select: none;
+	cursor: pointer;
+}
+
+#new-fact:hover
+{
+	background-color: var(--default-primary-color);
+	transition: background-color .1s;
+}
+
+#new-fact:active
+{
+	background-color: var(--light-primary-color);
+	transition: background-color .01s;
+}
+
+span.nav-button-box
+{
+	padding: 0.2em 0.8em 0.2em !important;
+	width: 10.4em !important;
+}
+
+.hlist span.nav-button-box
+{
+	padding: 0.2em 0.8em 0.2em !important;
+	width: 10.4em !important;
 }

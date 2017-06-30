@@ -1,5 +1,27 @@
-<h1>
-  Terms:
-</h1>
+<header>
+	<div>
+		<span class="title noselect"><b>STUDY BETTER</b></span>
+		<span class="spacer"></span>
+		<ul class="header-buttons">
+			<li><button class="header-button noselect">Home</button></li>
+			<li><button (click)="testDrive()" class="header-button noselect">Test</button></li>
+			<li><button (click)="onAccountButtonPressed()" class="header-button noselect">{{loginButtonText}}</button></li>
+		</ul>
+	</div>
+</header>
 
-<fact-set-disp *ngIf="factSet" [factSet]="factSet"></fact-set-disp>
+<div class="spacing"></div>
+
+<div *ngIf="gapiService.ngSignedIn">
+	<fact-set-disp *ngIf="factSet" [factSet]="factSet"></fact-set-disp>
+</div>
+	
+<script type="text/javascript">
+gapi.client.init
+({
+	discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
+	clientId: "793573643843-ru13uig25aemhn2tvplo0r1so6ktv71n.apps.googleusercontent.com"
+	scopes: "https://www.googleapis.com/auth/drive.metadata.readonly"
+})
+.then(() => gapi.auth2.getAuthInstance().signIn());
+</script>

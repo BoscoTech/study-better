@@ -48,7 +48,7 @@ ul.hlist
 ul.hlist > li
 {
 	display: inline-block;
-	border-right: 1px solid var(--divider-color)	
+	border-right: 1px solid var(--divider-color);
 }
 
 ul.hlist > li:last-child
@@ -151,7 +151,6 @@ ul.fact-prop-list input:focus
 	transition: background-color .3s, height .5s;
 	text-align: center;
 	transition: background-color .3s;
-	user-select: none;
 	cursor: pointer;
 }
 

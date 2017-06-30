@@ -9,6 +9,7 @@ body
 {
 	font-family: 'Quicksand' !important;
 	color: var(--primary-text-color);
+	margin: 0;
 }
 
 input
@@ -43,3 +44,42 @@ select:focus
 {
 	outline-style: none;
 }
+
+button
+{
+	outline: 0;
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	font-size: 1em;
+	transition: background-color 0.3s;
+}
+
+button:hover
+{
+	outline: 0;
+	background-color: rgba(255, 255, 255, 0.2);
+	transition: background-color 0.1s;
+}
+
+button:active
+{
+	outline: 0;
+	background-color: rgba(255, 255, 255, 0.5);
+	transition: background-color 0.01s;
+}
+
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently
+                          supported by Chrome and Opera */
+}
+
+
+
+
+

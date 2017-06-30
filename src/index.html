@@ -1,14 +1,42 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>StudyBetter</title>
-  <base href="/">
+	<meta charset="utf-8">
+	<title>StudyBetter</title>
+	<base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	
+	<script type="text/javascript">
+		window.testVar = "Test Var Text";
+	</script>
+	<script type="text/javascript">
+		function login()
+		{
+			let discover = "https://www.googleapis.com/discovery/v1/apis/";
+			console.log(gapi.auth2.getAuthInstance());
+			gapi.client.init({
+				apiKey: 'AIzaSyAn0Y9g_4HSxfVAro6nd5rUuiZDYS1eBOk',
+				clientId: '793573643843-tvo4gbajk3joidsrjsu7giesf3m6mrnp.apps.googleusercontent.com',
+				scope: 'profile https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.metadata.readonly'
+			}).then(() =>
+			{
+				console.log(gapi.auth2.getAuthInstance());
+				window.gapiLoadedAngularCallback(gapi);
+			})
+		}
+		
+		//Called when the empty gapi is loaded. At this point, gapi is basically just a loader for google apis.
+		function onGapiLoad()
+		{
+			gapi.load("client:auth2,drive-realtime", login) //Load some actual apis.		
+		}
+	</script>
+	<script src="https://apis.google.com/js/api.js?onload=onGapiLoad"></script>
+	
 </head>
 <body>
-  <app-root>Loading...</app-root>
+	<app-root>Loading...</app-root>
 </body>
 </html>

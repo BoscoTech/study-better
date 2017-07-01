@@ -7,11 +7,10 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
-	
+
+	<!-- GAPI Loaded Callback -->
 	<script type="text/javascript">
-		window.testVar = "Test Var Text";
-	</script>
-	<script type="text/javascript">
+		window.useMathjax = false;
 		//Called when the empty gapi is loaded. At this point, gapi is basically just a loader for google apis.
 		function onGapiLoad()
 		{
@@ -29,11 +28,18 @@
 				console.log("User logged in? " + gapi.auth2.getAuthInstance().isSignedIn.get().toString());
 				//gapi.drive.realtime.load("0B2f-mdto55TRekhhaGhnV1E2WWs", (r) => console.log(r)); //There's a bug that prevents this from working when using auth2. Waiting on StackOverflow to see if there is a fix.
 				window.gapiLoadedAngularCallback(gapi);
+				window.useMathjax = true;
 			})
 		}
 	</script>
 	
+	<!-- GAPI -->
 	<script src="https://apis.google.com/js/api.js?onload=onGapiLoad"></script>
+	
+	<!-- MathJax (Everything version) -->
+	<script type="text/javascript" async
+		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+	</script>
 	
 </head>
 <body>

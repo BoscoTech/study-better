@@ -9,13 +9,15 @@ import { FactSetService } from './fact/fact-set.service';
 import { GapiService } from './gwrap/gapi.service';
 import { DriveService } from './gwrap/drive.service';
 import { RealtimeService } from './gwrap/realtime.service';
+import { JaxComponent } from './jax/jax.component';
 
 @NgModule
 ({
 	declarations: 
 	[
 		AppComponent,
-		FactSetDispComponent
+		FactSetDispComponent,
+		JaxComponent
 	],
 	imports: 
 	[

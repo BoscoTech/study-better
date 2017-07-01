@@ -1,8 +1,9 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { Fact, Column, FactSet } from './fact/fact-data';
 import { FactSetService } from './fact/fact-set.service';
 import { GapiService, Response } from './gwrap/gapi.service';
 import { DriveService, FileR, FileListR, DriveUtil } from './gwrap/drive.service';
+import { JaxComponent } from './jax/jax.component';
 import * as Realtime from './gwrap/realtime.service';
 
 const TEST_ID = "0B2f-mdto55TRekhhaGhnV1E2WWs";
@@ -18,6 +19,11 @@ export class AppComponent implements OnInit
 	title = 'app works!';
 	factSet: FactSet;
 	loginButtonText = "Loading...";
+	mathTest = "\\sqrt{x}";
+	
+	setMathTest(newText: string): void {
+		this.ngZone.run(() => this.mathTest = newText);
+	}
 	
 	constructor(private factSetService: FactSetService, private gapiService: GapiService, private driveService: DriveService, private realtimeService: Realtime.RealtimeService, private ngZone: NgZone) {
 		window["appComponent"] = this;

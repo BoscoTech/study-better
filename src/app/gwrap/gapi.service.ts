@@ -84,11 +84,13 @@ export interface Auth2 {
 
 export interface Client {
 	request(any): Promise<any>;
+	authorize(any): void;
 }
 
 export interface Gapi {
-	auth2: Auth2;
+	auth2: any;
 	client: Client;
+	drive: {realtime: any};
 }
 
 @Injectable()

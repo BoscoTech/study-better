@@ -2,7 +2,8 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Fact, Column, FactSet } from './fact/fact-data';
 import { FactSetService } from './fact/fact-set.service';
 import { GapiService, Response } from './gwrap/gapi.service';
-import { DriveService, FileR,  DriveUtil } from './gwrap/drive.service';
+import { DriveService, FileR, FileListR, DriveUtil } from './gwrap/drive.service';
+import * as Realtime from './gwrap/realtime.service';
 
 const TEST_ID = "0B2f-mdto55TRekhhaGhnV1E2WWs";
 
@@ -18,7 +19,9 @@ export class AppComponent implements OnInit
 	factSet: FactSet;
 	loginButtonText = "Loading...";
 	
-	constructor(private factSetService: FactSetService, private gapiService: GapiService, private driveService: DriveService, private ngZone: NgZone) { }
+	constructor(private factSetService: FactSetService, private gapiService: GapiService, private driveService: DriveService, private realtimeService: Realtime.RealtimeService, private ngZone: NgZone) {
+		window["appComponent"] = this;
+	}
 	
 	ngOnInit(): void {
 		this.gapiService.loaded.listen((v: boolean) => this.ngZone.run(() => this.onAuthLoad()));
@@ -31,8 +34,8 @@ export class AppComponent implements OnInit
 	}
 	
 	updateLoginButtonText(userIsLoggedIn: boolean): void {
-		console.log(userIsLoggedIn);
 		if(userIsLoggedIn) {
+			//this.realtimeService.load(TEST_ID, (r: Realtime.Document) => console.log(r));
 			this.loginButtonText = "Sign Out";
 		} else {
 			this.loginButtonText = "Sign In";
@@ -50,6 +53,6 @@ export class AppComponent implements OnInit
 	}
 	
 	testDrive(): void {
-		this.driveService.files.updateMeta({fileId: TEST_ID}, DriveUtil.newFile("New Name")).then(console.log);
+		this.driveService.files.list({q: "name='New Name'"}).then((r: Response<FileListR>) => console.log(r.result));
 	}
 }

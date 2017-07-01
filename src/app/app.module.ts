@@ -8,6 +8,7 @@ import { FactSetDispComponent } from './fact/fact-set-disp/fact-set-disp.compone
 import { FactSetService } from './fact/fact-set.service';
 import { GapiService } from './gwrap/gapi.service';
 import { DriveService } from './gwrap/drive.service';
+import { RealtimeService } from './gwrap/realtime.service';
 
 @NgModule
 ({
@@ -22,7 +23,7 @@ import { DriveService } from './gwrap/drive.service';
 		FormsModule,
 		HttpModule
 	],
-	providers: [FactSetService, GapiService, DriveService],
+	providers: [FactSetService, GapiService, DriveService, RealtimeService],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

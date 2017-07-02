@@ -37,7 +37,7 @@
 	</li>
 	<li *ngFor="let fact of factSet.facts; let fi = index">
 		<div class="fact" [class.selected]="selected === fact">
-			<ul class="hlist" (click)="select(fact)">
+			<ul class="hlist fact-prop-list" (click)="select(fact)">
 				<li *ngFor="let prop of fact.props; let i = index; trackBy:trackByIndex">
 					<input [(ngModel)]="fact.props[i]" placeholder="property">
 				</li>

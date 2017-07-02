@@ -4,6 +4,8 @@ import { FactSetService } from './fact/fact-set.service';
 import { GapiService, Response } from './gwrap/gapi.service';
 import { DriveService, FileR, FileListR, DriveUtil } from './gwrap/drive.service';
 import { JaxComponent } from './jax/jax.component';
+import { FormattedInputComponent } from './format/formatted-input.component';
+import { Formats } from './format/formats';
 import * as Realtime from './gwrap/realtime.service';
 
 const TEST_ID = "0B2f-mdto55TRekhhaGhnV1E2WWs";
@@ -19,7 +21,8 @@ export class AppComponent implements OnInit
 	title = 'app works!';
 	factSet: FactSet;
 	loginButtonText = "Loading...";
-	mathTest = "\\sqrt{x}";
+	mathTest = "\\scriptsize2H_2+O_2+C_2H_3O_2\\xrightarrow[hi]{delta}2H_2O";
+	formatter = Formats.mathjax;
 	
 	setMathTest(newText: string): void {
 		this.ngZone.run(() => this.mathTest = newText);

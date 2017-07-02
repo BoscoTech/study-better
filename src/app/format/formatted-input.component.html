@@ -1,0 +1,6 @@
+<span *ngIf="editing">
+	<input #in [(ngModel)]="unformattedContent" placeholder="test" (blur)="endEdit()" (keyup)="doFormChange()" (keyup.enter)="endEdit()">
+</span>
+<span (click)="beginEdit()" *ngIf="!editing">
+	<jax [Tex]="formattedContent"></jax>
+</span>

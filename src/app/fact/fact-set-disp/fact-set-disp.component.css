@@ -59,7 +59,7 @@ ul.hlist > li:last-child
 ul.hlist > li > *
 {
 	display: inline-block;
-	padding: .5em 1em;
+	padding: .5em;
 	width: 10em;
 	height: 1em;
 }
@@ -122,24 +122,6 @@ ul.fact-prop-list
 	padding: 0 0;	
 }
 
-ul.fact-prop-list li *
-{
-	display: inline-block;
-	padding: .5em 1em;
-	width: 10em;
-	height: 100%;
-}
-
-ul.fact-prop-list input:hover
-{
-	cursor: pointer;
-}
-
-ul.fact-prop-list input:focus
-{
-	cursor: text;
-}
-
 #new-fact
 {
 	display: inline-block;
@@ -166,14 +148,8 @@ ul.fact-prop-list input:focus
 	transition: background-color .01s;
 }
 
-span.nav-button-box
-{
-	padding: 0.2em 0.8em 0.2em !important;
-	width: 10.4em !important;
-}
-
 .hlist span.nav-button-box
 {
 	padding: 0.2em 0.8em 0.2em !important;
-	width: 10.4em !important;
+	width: 9.4em !important;
 }

@@ -12,7 +12,11 @@
 
 <div class="spacing"></div>
 
-<jax [Tex]="mathTest"></jax>
+<formatted-input [(ngModel)]="mathTest" [formatter]="formatter"></formatted-input>
+
+<p>
+	The code for that is: {{mathTest}}
+</p>
 
 <div *ngIf="gapiService.ngSignedIn">
 	<fact-set-disp *ngIf="factSet" [factSet]="factSet"></fact-set-disp>

@@ -13,9 +13,8 @@ export class JaxComponent {
 
 	ngOnChanges() {
 		this.texDisplay.nativeElement.innerHTML = this.texCode;
-		if(("useMathjax" in window) && (window["useMathjax"])) {
+		if("MathJax" in window) {
 			window["MathJax"].Hub.Queue(["Typeset", window["MathJax"].Hub, this.texDisplay.nativeElement]);
-			console.log(window["MathJax"].Hub.queue);
 		}
 	}
 }

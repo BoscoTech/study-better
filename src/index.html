@@ -10,7 +10,6 @@
 
 	<!-- GAPI Loaded Callback -->
 	<script type="text/javascript">
-		window.useMathjax = false;
 		//Called when the empty gapi is loaded. At this point, gapi is basically just a loader for google apis.
 		function onGapiLoad()
 		{
@@ -28,7 +27,6 @@
 				console.log("User logged in? " + gapi.auth2.getAuthInstance().isSignedIn.get().toString());
 				//gapi.drive.realtime.load("0B2f-mdto55TRekhhaGhnV1E2WWs", (r) => console.log(r)); //There's a bug that prevents this from working when using auth2. Waiting on StackOverflow to see if there is a fix.
 				window.gapiLoadedAngularCallback(gapi);
-				window.useMathjax = true;
 			})
 		}
 	</script>

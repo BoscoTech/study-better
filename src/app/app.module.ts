@@ -10,6 +10,7 @@ import { GapiService } from './gwrap/gapi.service';
 import { DriveService } from './gwrap/drive.service';
 import { RealtimeService } from './gwrap/realtime.service';
 import { JaxComponent } from './jax/jax.component';
+import { FormattedInputComponent } from './format/formatted-input.component';
 
 @NgModule
 ({
@@ -17,7 +18,8 @@ import { JaxComponent } from './jax/jax.component';
 	[
 		AppComponent,
 		FactSetDispComponent,
-		JaxComponent
+		JaxComponent,
+		FormattedInputComponent
 	],
 	imports: 
 	[

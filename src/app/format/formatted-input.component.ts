@@ -21,7 +21,9 @@ export class FormattedInputComponent implements OnInit, ControlValueAccessor {
 	ngOnInit() { }
 	
 	formatContent(): void {
-		this.formattedContent = this.formatter(this.unformattedContent);
+		if(this.unformattedContent) {
+			this.formattedContent = this.formatter(this.unformattedContent);
+		}
 	}
 	
 	writeValue(value: any): void {

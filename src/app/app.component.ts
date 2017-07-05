@@ -21,8 +21,8 @@ export class AppComponent implements OnInit
 	title = 'app works!';
 	factSet: FactSet;
 	loginButtonText = "Loading...";
-	mathTest = "\\scriptsize2H_2+O_2+C_2H_3O_2\\xrightarrow[hi]{delta}2H_2O";
-	formatter = Formats.mathjax;
+	mathTest = "C2H3O2";
+	formatter = Formats.reaction;
 	
 	setMathTest(newText: string): void {
 		this.ngZone.run(() => this.mathTest = newText);
@@ -30,6 +30,7 @@ export class AppComponent implements OnInit
 	
 	constructor(private factSetService: FactSetService, private gapiService: GapiService, private driveService: DriveService, private realtimeService: Realtime.RealtimeService, private ngZone: NgZone) {
 		window["appComponent"] = this;
+		window["Formats"] = Formats;
 	}
 	
 	ngOnInit(): void {

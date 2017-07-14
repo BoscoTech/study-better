@@ -22,6 +22,7 @@ export class FormattedInputComponent implements OnInit, ControlValueAccessor {
 	
 	formatContent(): void {
 		if(this.unformattedContent) {
+			console.log(this.formatter);
 			this.formattedContent = this.formatter(this.unformattedContent);
 		}
 	}
@@ -43,6 +44,10 @@ export class FormattedInputComponent implements OnInit, ControlValueAccessor {
 		if(this.editing) return;
 		this.editing = true;
 		this.focusInput = true;
+	}
+	
+	ngOnChanges(): void {
+		this.formatContent();
 	}
 	
 	ngAfterViewChecked(): void {

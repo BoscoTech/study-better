@@ -39,8 +39,8 @@ export class AppComponent implements OnInit
 	}
 	
 	onAuthLoad(): void {
-		this.gapiService.auth2.isSignedIn.listen((v: boolean) => this.ngZone.run(() => this.updateLoginButtonText(v)));
-		this.updateLoginButtonText(this.gapiService.auth2.isSignedIn.get()); //Update initial state, we might be logged in already.
+		this.gapiService.signedIn.listen((v: boolean) => this.ngZone.run(() => this.updateLoginButtonText(v)));
+		this.updateLoginButtonText(this.gapiService.signedIn.get()); //Update initial state, we might be logged in already.
 	}
 	
 	updateLoginButtonText(userIsLoggedIn: boolean): void {
@@ -54,15 +54,43 @@ export class AppComponent implements OnInit
 	
 	onAccountButtonPressed(): void {
 		if(this.gapiService.loaded) {
-			if(this.gapiService.auth2.isSignedIn.get()) {
-				this.gapiService.auth2.signOut();				
+			if(this.gapiService.signedIn.get()) {
+				//this.gapiService.auth2.signOut();
+				alert("Currently not working. I blame Google.");
 			} else {
-				this.gapiService.auth2.signIn();				
+				this.gapiService.signIn(true);
 			}
 		}
 	}
 	
-	testDrive(): void {
-		this.driveService.files.list({q: "name='New Name'"}).then((r: Response<FileListR>) => console.log(r.result));
+	listFile(): void {
+		this.driveService.files.list({q: "mimeType='application/prs.study-better'"}).then((r: Response<FileListR>) => console.log(r.result));
+	}
+	
+	createFile(): void {
+		this.driveService.files.createMetaOnly({}, {mimeType: "application/prs.study-better"}).then((r: Response<FileR>) => console.log(r.result));
+	}
+	
+	openFile(): void {
+		var id = 0;
+		this.driveService.files.list({q: "mimeType='application/prs.study-better'"}).then(
+				(r: Response<FileListR>) => this.realtimeService.load(r.result.files[0].id, 
+						(doc: any) => console.log(doc),
+						(model: any) => {
+							window['model'] = model
+							this.realtimeService.initFileFromObject({
+								obj1: "It's a string!",
+								obj2: ["It's", "an", "array!"],
+								map: {
+									yay: "Yay",
+									its: "it's",
+									map: "MAP",
+									time: "TIME"
+								}
+							})
+						}));
 	}
 }
+
+
+

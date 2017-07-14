@@ -191,7 +191,7 @@ export interface UpdatePermissionP {
 }
 
 export interface DriveR {
-	kind: string; //Identifies what kind of resource this is.
+	kind?: string; //Identifies what kind of resource this is.
 }
 
 export interface UserR extends DriveR {

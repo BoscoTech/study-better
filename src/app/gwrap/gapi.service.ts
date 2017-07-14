@@ -75,11 +75,9 @@ export interface Promise<T> {
 	execute(callback: {(jsonResp: any, rawResp: any)});
 }
 
-export interface Auth2 {
-	currentUser: RemoteResource<User>
-	isSignedIn: RemoteResource<boolean>
-	signIn(): void;
-	signOut(): void;
+export interface Auth {
+	authorize(args: {client_id: string, scope: string, immediate: boolean},
+			callback: {(any): any});
 }
 
 export interface Client {
@@ -96,13 +94,18 @@ export interface Gapi {
 @Injectable()
 export class GapiService {
 	private _loaded = new RemoteResourceClass<boolean>(true);
+	private _signedIn = new RemoteResourceClass<boolean>(true);
 	private _ngLoaded = false;
 	private _ngSignedIn = false;
 	private _gapi: Gapi;
-	private _auth2: Auth2;
+	private _auth: Auth;
 	
 	get loaded(): RemoteResource<boolean> {
 		return this._loaded;
+	}
+	
+	get signedIn(): RemoteResource<boolean> {
+		return this._signedIn;
 	}
 	
 	get ngLoaded(): boolean {
@@ -117,8 +120,8 @@ export class GapiService {
 		return this._gapi;
 	}
 	
-	get auth2(): Auth2 {
-		return this._auth2;
+	get auth(): Auth {
+		return this._auth;
 	}
 	
 	get client(): Client {
@@ -126,18 +129,36 @@ export class GapiService {
 	}
 	
 	constructor(private ngZone: NgZone) { 
-		window["gapiLoadedAngularCallback"] = (gapi: any) => this.gapiLoadedAngularCallback(gapi);
+		window["gapiLoadedAngularCallback"] = (gapi: any, autoLoginSuccess: boolean) => this.gapiLoadedAngularCallback(gapi, autoLoginSuccess);
 		//window["ngZone"] = this.ngZone
 	}
 	
-	gapiLoadedAngularCallback(gapi: any): void {
+	gapiLoadedAngularCallback(gapi: any, autoLoginSuccess: boolean): void {
 		this.ngZone.run(() => {
 			this._gapi = gapi;
-			this._auth2 = gapi.auth2.getAuthInstance();
-			this._auth2.isSignedIn.listen((v: boolean) => this.ngZone.run(() => this._ngSignedIn = v));
+			this._auth = gapi.auth;
 			this._loaded.set(true);
+			this._signedIn.set(autoLoginSuccess);
 			this._ngLoaded = true;
-			this._ngSignedIn = this._auth2.isSignedIn.get();
-		})
+			this._ngSignedIn = autoLoginSuccess
+		});
+	}
+	
+	//Handles a response from gapi.auth.
+	handleAuthResponse(response: any) {
+		if(response && response.status) {
+			let signedIn = response.status.signed_in
+			this._signedIn.set(signedIn);
+			this.ngZone.run(() => this._ngSignedIn = signedIn);
+		}
+	}
+	
+	//Try to log in with or without user intervention.
+	signIn(prompt: boolean): void {
+		this._auth.authorize({
+			client_id: window['client_id'],
+			scope: window['scope'],
+			immediate: !prompt
+		}, (r: any) => this.handleAuthResponse(r));		
 	}
 }

@@ -49,6 +49,7 @@ ul.hlist > li
 {
 	display: inline-block;
 	border-right: 1px solid var(--divider-color);
+	vertical-align: bottom;
 }
 
 ul.hlist > li:last-child
@@ -59,9 +60,9 @@ ul.hlist > li:last-child
 ul.hlist > li > *
 {
 	display: inline-block;
-	padding: .5em;
+	padding: .25em;
 	width: 10em;
-	height: 1em;
+	height: 1.5em;
 }
 
 div.fact
@@ -151,5 +152,5 @@ ul.fact-prop-list
 .hlist span.nav-button-box
 {
 	padding: 0.2em 0.8em 0.2em !important;
-	width: 9.4em !important;
+	width: 8.9em !important;
 }

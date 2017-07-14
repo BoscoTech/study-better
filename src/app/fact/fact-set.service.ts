@@ -5,7 +5,7 @@ import { FactSet, Fact } from './fact-data';
 @Injectable()
 export class FactSetService 
 {
-	factSet = new FactSet(3, 10);
+	factSet = new FactSet();
 	
 	getFactSet(): Promise<FactSet>
 	{

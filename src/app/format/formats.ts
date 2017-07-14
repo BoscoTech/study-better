@@ -1,8 +1,12 @@
 export namespace Formats {
-	export function plain_text(input: string): string {
+	export var Names = {};
+	
+	Names["plainText"] = "Plain Text";
+	export function plainText(input: string): string {
 		return input;
 	}
 	
+	Names["mathjax"] = "Manual Formatting";
 	export function mathjax(input: string): string {
 		return "\\(" + input + "\\)";
 	}
@@ -24,6 +28,8 @@ export namespace Formats {
 				}
 				if(plevel == 0) {
 					content[content.length-1][3] = chemical_piece(content[content.length-1][3]);
+				} else {
+					content[content.length-1][3] += char;
 				}
 			} else {
 				let newMode: ChemType;
@@ -32,8 +38,8 @@ export namespace Formats {
 				} else if(char.match(/[0-9]/)) {
 					newMode = ChemType.NUMBER;
 				} else if(char.match(/(\+|-)/)) {
+					var chargeIndex = content.length-1; //Store this for later, when figuring out if the formula should have a superscript.
 					newMode = ChemType.CHARGE;
-					var chargeIndex = i; //Store this for later, when figuring out if the formula should have a superscript.
 				} else if (char == '(') {
 					content.push([ChemType.PAREN, i, 1, ""]);
 					plevel += 1;
@@ -49,8 +55,9 @@ export namespace Formats {
 			content[content.length-1][2]++;
 		}
 		
+		console.log(content, chargeIndex);
+		
 		content.splice(0, 1); //Delete the first one, since it will always be a none type and will sometimes have 0 characters, which could cause problems.
-		console.log(content);
 		//Handle creation of the superscript.
 		if(chargeIndex) {
 			//Find the number for the superscript (if it exists)
@@ -89,11 +96,9 @@ export namespace Formats {
 			} else {
 				content.splice(chargeIndex, 1);
 			}
-			console.log(superscript);
 		}
 		
 		let tr = "";
-		console.log(content);
 		let coefficient = true;
 		//Add the chemical names and subscripts to the formula.
 		for(let i=0; i< content.length; i++) {
@@ -107,6 +112,8 @@ export namespace Formats {
 				} else {
 					tr += "_{" + input.substr(c[1], c[2]) + "}";
 				}
+			} else if(c[0] == ChemType.PAREN) {
+				tr += "(" + c[3] + ")";
 			}
 		}
 		//If it exists, add the superscript to the end of the formula.
@@ -116,29 +123,34 @@ export namespace Formats {
 		return tr;
 	}
 	
+	Names["chemical"] = "Chemical Formula";
 	export function chemical(input: string): string {
 		try {
 			return "\\(" + chemical_piece(input) + "\\)";
 		} catch(err) {
+			console.error(err);
 			return "Syntax Error";
 		}
 	}
 	
+	Names["reaction"] = "Chemical Reaction";
 	var arrows = ["->", ">", "<-", "<"];
 	var larrows = ["\\xrightarrow{}", "\\xrightarrow{}", "\\xleftarrow{}", "\\xleftarrow{}"];
+	var plusRx = /\+(?! *[0-9]*(?:\+|->|>|<-|<|\n))/; //Matches pluses that are not used to indicate charge.
 	export function reaction(input: string): string {
 		try {
+			input += "\n";
 			//Find the arrow, if there is any.
 			let arrowIndex = 0;
 			while(!input.includes(arrows[arrowIndex]) && (arrowIndex < arrows.length)) {
 				arrowIndex++;
 			}
 			if(arrowIndex == arrows.length) {
-				var reactants = input.split(" + ");
+				var reactants = input.split(plusRx);
 			} else {
 				let pieces = input.split(arrows[arrowIndex]);
-				var reactants = pieces[0].split(" + ");
-				var products = pieces[1].split(" + ");
+				var reactants = (pieces[0] + "\n").split(plusRx);
+				var products = pieces[1].split(plusRx);
 			}
 			let reaction = "";
 			for(let i=0; i< reactants.length; i++) {
@@ -154,6 +166,7 @@ export namespace Formats {
 			}
 			return "\\(" + reaction + "\\)";
 		} catch(err) {
+			console.log(err);
 			return "Syntax Error";
 		}
 	}

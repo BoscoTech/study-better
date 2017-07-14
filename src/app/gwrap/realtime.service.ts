@@ -129,6 +129,8 @@ export interface Error {
 @Injectable()
 export class RealtimeService {
 	private realtime: any;
+	private document: Document;
+	private model: Model;
 	
 	constructor(private gapiService: GapiService) { 
 		gapiService.loaded.listen((loaded: boolean) => this.loadRealtimeFromGapi());
@@ -154,9 +156,22 @@ export class RealtimeService {
 		}
 	}
 	
-	load(fileId: string, onLoaded: {(Document): any}, onInit?: {(Model): any}, onError?: {(Error): any}): void {
+	onLoad(document: Document) {
+		this.document = document;
+		if(!this.model) {
+			this.model = this.document.getModel();
+		}
+	}
+	
+	onInit(model: Model) {
+		this.model = model;
+	}
+	
+	load(fileId: string, onLoaded?: {(Document): any}, onInit?: {(Model): any}, onError?: {(Error): any}): void {
 		if(this.realtime) {
-			this.realtime.load(fileId, onLoaded, onInit, onError);
+			this.realtime.load(fileId, 
+					(d: Document) => { this.onLoad(d); onLoaded && onLoaded(d); }, 
+					(m: Model) => { this.onInit(m); onInit && onInit(m); }, onError);
 		} else {
 			throw "Realtime has not been loaded yet!";
 		}
@@ -165,6 +180,8 @@ export class RealtimeService {
 	loadAppDataDocument(onLoaded: {(Document): any}, onInit?: {(Model): any}, onError?: {(Error): any}): void {
 		if(this.realtime) {
 			this.realtime.loadAppDataDocument(onLoaded, onInit, onError);
+		} else {
+			throw "Realtime has not been loaded yet!";
 		}
 	}
 	
@@ -181,6 +198,40 @@ export class RealtimeService {
 			return this.realtime.loadAppDataDocument(onLoaded, onInit, onError);
 		} else {
 			throw "Realtime has not been loaded yet!";
+		}
+	}
+	
+	createCollaborativeObjectFromObject(json: any): CollaborativeObject {
+		if(this.model) {
+			if(typeof json == "string") {
+				return this.model.createString(json);
+			} else if(Array.isArray(json)) {
+				let arr = this.model.createList();
+				for(let i=0; i< json.length; i++) {
+					arr.push(this.createCollaborativeObjectFromObject(json[i]));
+				}
+				return arr;
+			} else {
+				let map = this.model.createMap();
+				for(let key in json) {
+					map.set(key, this.createCollaborativeObjectFromObject(json[key]));
+				}
+				return map;
+			}
+		} else {
+			return null;
+		}
+	}
+	
+	initFileFromObject(json: any): void {
+		if(this.model) {
+			this.model.beginCompoundOperation();
+			let root = this.model.getRoot();
+			for(let key in json) {
+				root.set(key, this.createCollaborativeObjectFromObject(json[key]));
+			}
+			this.model.endCompoundOperation();
+			console.log("Initialized!");
 		}
 	}
 }

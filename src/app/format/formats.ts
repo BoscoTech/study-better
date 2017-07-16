@@ -55,8 +55,6 @@ export namespace Formats {
 			content[content.length-1][2]++;
 		}
 		
-		console.log(content, chargeIndex);
-		
 		content.splice(0, 1); //Delete the first one, since it will always be a none type and will sometimes have 0 characters, which could cause problems.
 		//Handle creation of the superscript.
 		if(chargeIndex) {
@@ -166,7 +164,6 @@ export namespace Formats {
 			}
 			return "\\(" + reaction + "\\)";
 		} catch(err) {
-			console.log(err);
 			return "Syntax Error";
 		}
 	}

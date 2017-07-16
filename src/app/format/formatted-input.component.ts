@@ -22,7 +22,6 @@ export class FormattedInputComponent implements OnInit, ControlValueAccessor {
 	
 	formatContent(): void {
 		if(this.unformattedContent) {
-			console.log(this.formatter);
 			this.formattedContent = this.formatter(this.unformattedContent);
 		}
 	}

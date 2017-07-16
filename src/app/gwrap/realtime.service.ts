@@ -128,91 +128,95 @@ export interface Error {
 
 @Injectable()
 export class RealtimeService {
-	private realtime: any;
-	private document: Document;
-	private model: Model;
-	
+	private _realtime: any;
+	private _document: Document;
+	private _model: Model;
+
+	get document(): Document {
+		return this._document;
+	}
+
 	constructor(private gapiService: GapiService) { 
 		gapiService.loaded.listen((loaded: boolean) => this.loadRealtimeFromGapi());
 	}
 	
 	private loadRealtimeFromGapi(): void {
-		this.realtime = this.gapiService.gapi.drive.realtime;
+		this._realtime = this.gapiService.gapi.drive.realtime;
 	}
 	
 	debug(): void {
-		if(this.realtime) {
-			this.realtime.debug();
+		if(this._realtime) {
+			this._realtime.debug();
 		} else {
-			throw "Realtime has not been loaded yet!";
+			throw "_realtime has not been loaded yet!";
 		}
 	}
 	
 	enableTestMode(): void {
-		if(this.realtime) {
-			this.realtime.enableTestMode();
+		if(this._realtime) {
+			this._realtime.enableTestMode();
 		} else {
-			throw "Realtime has not been loaded yet!";
+			throw "_realtime has not been loaded yet!";
 		}
 	}
 	
 	onLoad(document: Document) {
-		this.document = document;
-		if(!this.model) {
-			this.model = this.document.getModel();
+		this._document = document;
+		if(!this._model) {
+			this._model = this._document.getModel();
 		}
 	}
 	
 	onInit(model: Model) {
-		this.model = model;
+		this._model = model;
 	}
 	
-	load(fileId: string, onLoaded?: {(Document): any}, onInit?: {(Model): any}, onError?: {(Error): any}): void {
-		if(this.realtime) {
-			this.realtime.load(fileId, 
+	load(fileId: string, onLoaded?: {(_document): any}, onInit?: {(_model): any}, onError?: {(Error): any}): void {
+		if(this._realtime) {
+			this._realtime.load(fileId, 
 					(d: Document) => { this.onLoad(d); onLoaded && onLoaded(d); }, 
 					(m: Model) => { this.onInit(m); onInit && onInit(m); }, onError);
 		} else {
-			throw "Realtime has not been loaded yet!";
+			throw "_realtime has not been loaded yet!";
 		}
 	}
 	
-	loadAppDataDocument(onLoaded: {(Document): any}, onInit?: {(Model): any}, onError?: {(Error): any}): void {
-		if(this.realtime) {
-			this.realtime.loadAppDataDocument(onLoaded, onInit, onError);
+	loadAppData_document(onLoaded: {(_document): any}, onInit?: {(_model): any}, onError?: {(Error): any}): void {
+		if(this._realtime) {
+			this._realtime.loadAppData_document(onLoaded, onInit, onError);
 		} else {
-			throw "Realtime has not been loaded yet!";
+			throw "_realtime has not been loaded yet!";
 		}
 	}
 	
 	loadFromJson(json: string, onError?: {(Error): any}): Document {
-		if(this.realtime) {
-			return this.realtime.loadFromJson(json, onError);
+		if(this._realtime) {
+			return this._realtime.loadFromJson(json, onError);
 		} else {
-			throw "Realtime has not been loaded yet!";
+			throw "_realtime has not been loaded yet!";
 		}
 	}
 	
-	newInMemoryDocument(onLoaded: {(Document): any}, onInit?: {(Model): any}, onError?: {(Error): any}): Document {
-		if(this.realtime) {
-			return this.realtime.loadAppDataDocument(onLoaded, onInit, onError);
+	newInMemory_document(onLoaded: {(d: Document): any}, onInit?: {(m: Model): any}, onError?: {(e: any): any}): Document {
+		if(this._realtime) {
+			return this._realtime.loadAppData_document(onLoaded, onInit, onError);
 		} else {
-			throw "Realtime has not been loaded yet!";
+			throw "_realtime has not been loaded yet!";
 		}
 	}
 	
 	createCollaborativeObjectFromObject(json: any): CollaborativeObject {
-		if(this.model) {
+		if(this._model) {
 			if(typeof json == "string") {
-				return this.model.createString(json);
+				return this._model.createString(json);
 			} else if(Array.isArray(json)) {
-				let arr = this.model.createList();
+				let arr = this._model.createList();
 				for(let i=0; i< json.length; i++) {
 					arr.push(this.createCollaborativeObjectFromObject(json[i]));
 				}
 				return arr;
 			} else {
-				let map = this.model.createMap();
+				let map = this._model.createMap();
 				for(let key in json) {
 					map.set(key, this.createCollaborativeObjectFromObject(json[key]));
 				}
@@ -224,14 +228,13 @@ export class RealtimeService {
 	}
 	
 	initFileFromObject(json: any): void {
-		if(this.model) {
-			this.model.beginCompoundOperation();
-			let root = this.model.getRoot();
+		if(this._model) {
+			this._model.beginCompoundOperation();
+			let root = this._model.getRoot();
 			for(let key in json) {
 				root.set(key, this.createCollaborativeObjectFromObject(json[key]));
 			}
-			this.model.endCompoundOperation();
-			console.log("Initialized!");
+			this._model.endCompoundOperation();
 		}
 	}
 }

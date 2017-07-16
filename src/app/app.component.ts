@@ -6,6 +6,7 @@ import { DriveService, FileR, FileListR, DriveUtil } from './gwrap/drive.service
 import { JaxComponent } from './jax/jax.component';
 import { FormattedInputComponent } from './format/formatted-input.component';
 import { Formats } from './format/formats';
+import { EditorComponent } from './editors/editor.component';
 import * as Realtime from './gwrap/realtime.service';
 
 const TEST_ID = "0B2f-mdto55TRekhhaGhnV1E2WWs";
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit
 	loginButtonText = "Loading...";
 	mathTest = "C2H3O2";
 	formatter = Formats.reaction;
+	@ViewChild(EditorComponent) editor: EditorComponent;
 	
 	setMathTest(newText: string): void {
 		this.ngZone.run(() => this.mathTest = newText);
@@ -56,7 +58,7 @@ export class AppComponent implements OnInit
 		if(this.gapiService.loaded) {
 			if(this.gapiService.signedIn.get()) {
 				//this.gapiService.auth2.signOut();
-				alert("Currently not working. I blame Google.");
+				alert("Sorry, there was an error. It was completely Google's fault. Send them an angry email about how bad their programmers are.");
 			} else {
 				this.gapiService.signIn(true);
 			}
@@ -68,27 +70,12 @@ export class AppComponent implements OnInit
 	}
 	
 	createFile(): void {
-		this.driveService.files.createMetaOnly({}, {mimeType: "application/prs.study-better"}).then((r: Response<FileR>) => console.log(r.result));
+		this.driveService.files.createMetaOnly({}, {mimeType: "application/prs.study-better"}).then((r: Response<FileR>) => { });
 	}
 	
 	openFile(): void {
-		var id = 0;
 		this.driveService.files.list({q: "mimeType='application/prs.study-better'"}).then(
-				(r: Response<FileListR>) => this.realtimeService.load(r.result.files[0].id, 
-						(doc: any) => console.log(doc),
-						(model: any) => {
-							window['model'] = model
-							this.realtimeService.initFileFromObject({
-								obj1: "It's a string!",
-								obj2: ["It's", "an", "array!"],
-								map: {
-									yay: "Yay",
-									its: "it's",
-									map: "MAP",
-									time: "TIME"
-								}
-							})
-						}));
+				(r: Response<FileListR>) => this.editor.openFile(r.result.files[0].id));
 	}
 }
 

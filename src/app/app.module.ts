@@ -11,6 +11,7 @@ import { DriveService } from './gwrap/drive.service';
 import { RealtimeService } from './gwrap/realtime.service';
 import { JaxComponent } from './jax/jax.component';
 import { FormattedInputComponent } from './format/formatted-input.component';
+import { EditorComponent } from './editors/editor.component';
 
 @NgModule
 ({
@@ -19,7 +20,8 @@ import { FormattedInputComponent } from './format/formatted-input.component';
 		AppComponent,
 		FactSetDispComponent,
 		JaxComponent,
-		FormattedInputComponent
+		FormattedInputComponent,
+		EditorComponent
 	],
 	imports: 
 	[

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -12,6 +12,8 @@ import { RealtimeService } from './gwrap/realtime.service';
 import { JaxComponent } from './jax/jax.component';
 import { FormattedInputComponent } from './format/formatted-input.component';
 import { EditorComponent } from './editors/editor.component';
+import { FactSetEditorComponent } from './editors/fact-set/fact-set-editor.component';
+import { InjectorRef } from "app/injector-ref";
 
 @NgModule
 ({
@@ -21,7 +23,8 @@ import { EditorComponent } from './editors/editor.component';
 		FactSetDispComponent,
 		JaxComponent,
 		FormattedInputComponent,
-		EditorComponent
+		EditorComponent,
+		FactSetEditorComponent
 	],
 	imports: 
 	[
@@ -32,4 +35,8 @@ import { EditorComponent } from './editors/editor.component';
 	providers: [FactSetService, GapiService, DriveService, RealtimeService],
 	bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+	constructor(private injector: Injector) {
+		InjectorRef.injector = this.injector;
+	}
+}

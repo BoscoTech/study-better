@@ -8,6 +8,7 @@ import { FormattedInputComponent } from './format/formatted-input.component';
 import { Formats } from './format/formats';
 import { EditorComponent } from './editors/editor.component';
 import * as Realtime from './gwrap/realtime.service';
+import { FactSetEditorComponent } from "app/editors/fact-set/fact-set-editor.component";
 
 const TEST_ID = "0B2f-mdto55TRekhhaGhnV1E2WWs";
 
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit
 	loginButtonText = "Loading...";
 	mathTest = "C2H3O2";
 	formatter = Formats.reaction;
-	@ViewChild(EditorComponent) editor: EditorComponent;
+	@ViewChild(FactSetEditorComponent) editor: FactSetEditorComponent;
 	
 	setMathTest(newText: string): void {
 		this.ngZone.run(() => this.mathTest = newText);

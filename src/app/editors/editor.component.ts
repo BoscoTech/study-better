@@ -1,5 +1,6 @@
-import { CollaborativeMap, Document, EventType, Model, RealtimeService } from "app/gwrap/realtime.service";
+import { CollaborativeMap, Document, EventType, Model, RealtimeService, CollaborativeList, CollaborativeString } from "app/gwrap/realtime.service";
 import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { InjectorRef } from "app/injector-ref";
 
 @Component({
   selector: 'editor',
@@ -10,6 +11,9 @@ export class EditorComponent {
 	private _editing: Document;
 	private angularVars = {};
 	private _loading: boolean;
+	
+	protected realtime: RealtimeService;
+	protected ngZone: NgZone;
 	
 	//Returns what the data structure should look like for a new document of this type.
 	get defaultDataStructure(): any {
@@ -26,6 +30,11 @@ export class EditorComponent {
 		return this._editing && !this._editing.isClosed;
 	}
 	
+	//Returns the model that is being edited.
+	get model(): Model {
+		return (this.editing) ? this._editing.getModel() : null;
+	}
+	
 	//Returns true if a document is currently being loaded.
 	get loading(): boolean {
 		return this._loading;
@@ -40,12 +49,15 @@ export class EditorComponent {
 		}
 	}
 	
-	constructor(private cdr: ChangeDetectorRef, private realtimeService: RealtimeService, private ngZone: NgZone) { }
+	constructor(protected cdr: ChangeDetectorRef) { 
+		this.realtime = InjectorRef.injector.get(RealtimeService);
+		this.ngZone = InjectorRef.injector.get(NgZone);
+	}
 	
 	//Called whenever a change is made to the document
 	onRootChange(event: any) {
 		if(!event.isLocal) {
-			this.cdr.detectChanges();
+			this.ngZone.run(() => this.cdr.detectChanges());
 		}
 	}
 	
@@ -58,20 +70,48 @@ export class EditorComponent {
 	openFile(id: string): void {
 		this._loading = true;
 		this.cdr.detectChanges();
-		this.realtimeService.load(id, (d: Document) => {
+		this.realtime.load(id, (d: Document) => {
 			this._editing = d;
 			this._loading = false;
-			console.log("Document loaded!");
 			d.getModel().getRoot().addEventListener(EventType.OBJECT_CHANGED, (e: any) => this.onRootChange(e));
-			this.cdr.detectChanges();
+			this.ngZone.run(() => this.cdr.detectChanges());
 		}, (m: Model) => {
-			console.log("Data structure initialized!");
-			this.realtimeService.initFileFromObject(this.defaultDataStructure);
+			this.realtime.initFileFromObject(this.defaultDataStructure);
 		});
 	}
 	
-	//Returns a variable corresponding to a collaborative variable which triggers angular updates whenever the collaborative version changes.
-	getAngularVarFor(path: Array<string>) {
-		
+	//E.G. getPath('key', 1) would be equivalent to editingRoot.get('key').get(1)
+	getPath(...path: Array<string|number>): any {
+		let next: any;
+		next = this.editingRoot;
+		for(let v of path) {
+			next = next.get(v);
+		}
+		return next;
+	}
+	
+	//Begins a compound operation
+	beginCompoundOperation(name?: string, isUndoable?: boolean): void {
+		this.model.beginCompoundOperation(name, isUndoable);
+	}
+	
+	//Ends a compound operation
+	endCompoundOperation(): void {
+		this.model.endCompoundOperation();
+	}
+	
+	//Creates a new collaborative string.
+	createString(value?: string): CollaborativeString {
+		return this.model.createString(value);
+	}
+	
+	//Creates a new collaborative list.
+	createList(value?: Array<any>): CollaborativeList {
+		return this.model.createList(value);
+	}
+	
+	//Creates a new collaborative map.
+	createMap(value?: Array<[string, any]>): CollaborativeMap {
+		return this.model.createMap(value);
 	}
 }

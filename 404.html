@@ -1,14 +1,47 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>StudyBetter</title>
-  <base href="/study-better/">
+	<meta charset="utf-8">
+	<title>StudyBetter</title>
+	<base href="/study-better/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link href="styles.a2f594512b8ed163532e.bundle.css" rel="stylesheet"/></head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+
+	<!-- GAPI Loaded Callback -->
+	<script type="text/javascript">
+		window.client_id = '793573643843-tvo4gbajk3joidsrjsu7giesf3m6mrnp.apps.googleusercontent.com';
+		window.scope = 'profile https://www.googleapis.com/auth/drive';
+	
+		//Called when the empty gapi is loaded. At this point, gapi is basically just a loader for google apis.
+		function onGapiLoad() {
+			gapi.load("client:auth2,drive-realtime", login) //Load some actual apis.		
+		}
+	
+		function loginCallback(result) {
+			window.gapiLoadedAngularCallback(gapi);
+		}
+		
+		function login() {
+			gapi.auth.authorize({
+				//apiKey: 'AIzaSyAn0Y9g_4HSxfVAro6nd5rUuiZDYS1eBOk',
+				client_id: window.client_id,
+				scope: window.scope,
+				immediate: true
+			}, loginCallback);
+		}
+	</script>
+	
+	<!-- GAPI -->
+	<script src="https://apis.google.com/js/api.js?onload=onGapiLoad"></script>
+	
+	<!-- MathJax (Everything version) -->
+	<script type="text/javascript" async
+		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+	</script>
+	
+<link href="styles.fcd71e8db92f2d41429a.bundle.css" rel="stylesheet"/></head>
 <body>
-  <app-root>Loading...</app-root>
-<script type="text/javascript" src="inline.866f7367db1d4b6330d5.bundle.js"></script><script type="text/javascript" src="polyfills.d81dd20c74d7e1f2eb57.bundle.js"></script><script type="text/javascript" src="main.ca4940d5425fdd922c33.bundle.js"></script></body>
+	<app-root>Loading...</app-root>
+<script type="text/javascript" src="inline.a95baa86bfe3c11288ea.bundle.js"></script><script type="text/javascript" src="polyfills.7a189c5b4d72834ed80d.bundle.js"></script><script type="text/javascript" src="main.ce06b29b7431c1526a4e.bundle.js"></script></body>
 </html>

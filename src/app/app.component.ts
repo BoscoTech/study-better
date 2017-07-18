@@ -1,6 +1,4 @@
 import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
-import { Fact, Column, FactSet } from './fact/fact-data';
-import { FactSetService } from './fact/fact-set.service';
 import { GapiService, Response } from './gwrap/gapi.service';
 import { DriveService, FileR, FileListR, DriveUtil } from './gwrap/drive.service';
 import { JaxComponent } from './jax/jax.component';
@@ -20,25 +18,16 @@ const TEST_ID = "0B2f-mdto55TRekhhaGhnV1E2WWs";
 })
 export class AppComponent implements OnInit
 {
-	title = 'app works!';
-	factSet: FactSet;
 	loginButtonText = "Loading...";
-	mathTest = "C2H3O2";
-	formatter = Formats.reaction;
 	@ViewChild(FactSetEditorComponent) editor: FactSetEditorComponent;
 	
-	setMathTest(newText: string): void {
-		this.ngZone.run(() => this.mathTest = newText);
-	}
-	
-	constructor(private factSetService: FactSetService, private gapiService: GapiService, private driveService: DriveService, private realtimeService: Realtime.RealtimeService, private ngZone: NgZone) {
+	constructor(private gapiService: GapiService, private driveService: DriveService, private realtimeService: Realtime.RealtimeService, private ngZone: NgZone) {
 		window["appComponent"] = this;
 		window["Formats"] = Formats;
 	}
 	
 	ngOnInit(): void {
 		this.gapiService.loaded.listen((v: boolean) => this.ngZone.run(() => this.onAuthLoad()));
-		this.factSetService.getFactSet().then(factSet => this.factSet = factSet); //Grab the data from the promise, once it's done.
 	}
 	
 	onAuthLoad(): void {

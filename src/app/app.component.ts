@@ -20,6 +20,7 @@ export class AppComponent implements OnInit
 {
 	loginButtonText = "Loading...";
 	@ViewChild(FactSetEditorComponent) editor: FactSetEditorComponent;
+	show400Help = false;
 	
 	constructor(private gapiService: GapiService, private driveService: DriveService, private realtimeService: Realtime.RealtimeService, private ngZone: NgZone) {
 		window["appComponent"] = this;

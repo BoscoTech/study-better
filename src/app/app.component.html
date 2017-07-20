@@ -14,4 +14,50 @@
 
 <div class="spacing"></div>
 
+<div *ngIf="gapiService.ngIsProblem" class="narrow">
+	<p>
+		Did you get a weird error that looked something like this?:
+	</p>
+	<p>
+		400. That's an error.
+		Error: unauthorized_scope
+	</p>
+	<p>
+		(Clicking 'yes' will guide you through the steps to fix this problem.)
+	</p>
+
+	<div *ngIf="!showHelp">
+		<button (click)="showHelp=true">Yes</button>
+		<button (click)="gapiService.clearProblem()">No</button>
+	</div>
+	
+	<div *ngIf="showHelp">		
+		<p>
+			This error is a safeguard to prevent developers from creating malicious 
+			applications that can access people's Google accounts. By default, Google
+			will not allow for users to sign in to an unknown application. However,
+			there is a workaround. Since signing in to an account is crucial for
+			testing, there is an override that each user can perform to tell Google
+			that they trust the application they are trying to log in to.
+		</p>
+		<p>
+			You can add your Google account to a group called 'Allow Risky Access
+			Permissions By Unreviewed Apps'. By joining this group, you are telling
+			Google that you trust the developer of the app you are trying to log in
+			to. To join this group, click the blue 'Join Group' button on
+			<a href="https://groups.google.com/forum/#!forum/risky-access-by-unreviewed-apps" target="_blank">
+				this page.
+			</a>
+			 (You may need to sign in to your Google account again before seeing the 
+			button.)
+		</p>
+		<p>
+			Eventually, I hope to get this app approved by Google, but that will
+			involve some tidying up and deciphering of legalese. So, for now, this is
+			the only way to get it to work. Sorry about the inconvenience.
+		</p>
+		<button (click)="showHelp=false; gapiService.clearProblem()">Close</button>
+	</div>
+</div>
+
 <fact-set-editor></fact-set-editor>

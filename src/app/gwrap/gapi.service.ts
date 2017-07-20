@@ -93,9 +93,11 @@ export interface Gapi {
 
 @Injectable()
 export class GapiService {
-	private _loaded = new RemoteResourceClass<boolean>(true);
-	private _signedIn = new RemoteResourceClass<boolean>(true);
+	private _loaded = new RemoteResourceClass<boolean>(false);
+	private _isProblem = new RemoteResourceClass<boolean>(false);
+	private _signedIn = new RemoteResourceClass<boolean>(false);
 	private _ngLoaded = false;
+	private _ngIsProblem = false;
 	private _ngSignedIn = false;
 	private _gapi: Gapi;
 	private _auth: Auth;
@@ -104,12 +106,20 @@ export class GapiService {
 		return this._loaded;
 	}
 	
+	get isProblem(): RemoteResourceClass<boolean> {
+		return this._isProblem;
+	}
+	
 	get signedIn(): RemoteResource<boolean> {
 		return this._signedIn;
 	}
 	
 	get ngLoaded(): boolean {
 		return this._ngLoaded;
+	}
+	
+	get ngIsProblem(): boolean {
+		return this._ngIsProblem;
 	}
 	
 	get ngSignedIn(): boolean {
@@ -153,12 +163,27 @@ export class GapiService {
 		}
 	}
 	
+	//Sets isProblem to false.
+	clearProblem(): void {
+		this._isProblem.set(false);
+		this.ngZone.run(() => this._ngIsProblem = false);
+	}
+	
 	//Try to log in with or without user intervention.
 	signIn(prompt: boolean): void {
+		if(prompt && !this._signedIn.get()) { //If the user is not yet signed in, they might eventually run in to the error.
+			setTimeout(() => {
+				if(this._signedIn.get()) return; //If the sign in was successful, don't ask if the user had a problem.				
+				this._isProblem.set(true);
+				this.ngZone.run(() => this._ngIsProblem = true);
+			}, 7.5 * 1000);
+		}
 		this._auth.authorize({
 			client_id: window['client_id'],
 			scope: window['scope'],
 			immediate: !prompt
-		}, (r: any) => this.handleAuthResponse(r));		
+		}, (r: any) => {
+			this.handleAuthResponse(r);
+		});
 	}
 }

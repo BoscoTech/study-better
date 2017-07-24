@@ -15,14 +15,32 @@ export class EditorComponent {
 	protected realtime: RealtimeService;
 	protected ngZone: NgZone;
 	
+	private static _editors = new Array<EditorComponent>();
+	private static _ngEditors = new Array<EditorComponent>();
+	
+	//Returns a list of all editors instantiated.
+	static get editors(): Array<EditorComponent> {
+		return EditorComponent._editors;
+	}
+	
+	//Returns a list of all editors instantiated. The resulting array will trigger change detection when changed.
+	static get ngEditors(): Array<EditorComponent> {
+		return EditorComponent._ngEditors;
+	}
+	
 	//Returns what the data structure should look like for a new document of this type.
 	get defaultDataStructure(): any {
 		return {};
 	}
 	
-	//Returns a string of the mime type for this filetype.
+	//Returns a string of the mime type for this file type.
 	get mimeType(): string {
 		return "application/prs.study-better.generic";
+	}
+	
+	//Returns a human-readable name for this file type.
+	get hrName(): string {
+		return "Generic";
 	}
 	
 	//Returns true if this filetype has a document loaded.
@@ -52,6 +70,8 @@ export class EditorComponent {
 	constructor(protected cdr: ChangeDetectorRef) { 
 		this.realtime = InjectorRef.injector.get(RealtimeService);
 		this.ngZone = InjectorRef.injector.get(NgZone);
+		EditorComponent._editors.push(this);
+		this.ngZone.run(() => EditorComponent._ngEditors.push(this));
 	}
 	
 	//Called whenever a change is made to the document
@@ -78,6 +98,14 @@ export class EditorComponent {
 		}, (m: Model) => {
 			this.realtime.initFileFromObject(this.defaultDataStructure);
 		});
+	}
+	
+	//Disconnects from the document
+	closeFile(): void {
+		if(this.editing) {
+			this._editing.close();
+			this.cdr.detectChanges();
+		}
 	}
 	
 	//E.G. getPath('key', 1) would be equivalent to editingRoot.get('key').get(1)

@@ -12,6 +12,7 @@ import { FormattedInputComponent } from './format/formatted-input.component';
 import { EditorComponent } from './editors/editor.component';
 import { FactSetEditorComponent } from './editors/fact-set/fact-set-editor.component';
 import { InjectorRef } from "app/injector-ref";
+import { PickerService } from "app/gwrap/picker.service";
 
 @NgModule
 ({
@@ -29,7 +30,7 @@ import { InjectorRef } from "app/injector-ref";
 		FormsModule,
 		HttpModule
 	],
-	providers: [GapiService, DriveService, RealtimeService],
+	providers: [GapiService, DriveService, RealtimeService, PickerService],
 	bootstrap: [AppComponent]
 })
 export class AppModule { 

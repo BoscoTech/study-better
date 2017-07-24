@@ -45,6 +45,12 @@ select:focus
 	outline-style: none;
 }
 
+ul
+{
+	list-style-type: none;
+	padding: 0em;
+}
+
 button
 {
 	outline: 0;

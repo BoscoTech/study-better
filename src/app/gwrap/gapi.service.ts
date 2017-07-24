@@ -101,6 +101,7 @@ export class GapiService {
 	private _ngSignedIn = false;
 	private _gapi: Gapi;
 	private _auth: Auth;
+	private _oAuthToken: string;
 	
 	get loaded(): RemoteResource<boolean> {
 		return this._loaded;
@@ -138,6 +139,10 @@ export class GapiService {
 		return this._gapi.client;
 	}
 	
+	get oAuthToken(): string {
+		return this._oAuthToken;
+	}
+	
 	constructor(private ngZone: NgZone) { 
 		window["gapiLoadedAngularCallback"] = (gapi: any, autoLoginSuccess: boolean) => this.gapiLoadedAngularCallback(gapi, autoLoginSuccess);
 		//window["ngZone"] = this.ngZone
@@ -160,6 +165,7 @@ export class GapiService {
 			let signedIn = response.status.signed_in
 			this._signedIn.set(signedIn);
 			this.ngZone.run(() => this._ngSignedIn = signedIn);
+			this._oAuthToken = response.access_token;
 		}
 	}
 	

@@ -10,12 +10,13 @@
 
 	<!-- GAPI Loaded Callback -->
 	<script type="text/javascript">
+		window.api_key = 'AIzaSyAn0Y9g_4HSxfVAro6nd5rUuiZDYS1eBOk';
 		window.client_id = '793573643843-tvo4gbajk3joidsrjsu7giesf3m6mrnp.apps.googleusercontent.com';
 		window.scope = 'profile https://www.googleapis.com/auth/drive';
 	
 		//Called when the empty gapi is loaded. At this point, gapi is basically just a loader for google apis.
 		function onGapiLoad() {
-			gapi.load("client:auth2,drive-realtime", login) //Load some actual apis.		
+			gapi.load("client:auth2,drive-realtime,picker", login) //Load some actual apis.		
 		}
 	
 		function loginCallback(result) {

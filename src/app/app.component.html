@@ -7,6 +7,7 @@
 <!--			<li><button (click)="listFile()" class="header-button noselect">ListFile</button></li>
 			<li><button (click)="createFile()" class="header-button noselect">CreateFile</button></li> -->
 			<li><button (click)="onAccountButtonPressed()" class="header-button noselect">{{loginButtonText}}</button></li>
+			<li *ngIf="gapiService.ngSignedIn"><button (click)="viewType=ViewTypes.CREATE" class="header-button noselect">New File</button></li>
 			<li *ngIf="gapiService.ngSignedIn"><button (click)="openFile()" class="header-button noselect">Open File</button></li>
 		</ul>
 	</div>
@@ -53,11 +54,59 @@
 		</p>
 		<p>
 			Eventually, I hope to get this app approved by Google, but that will
-			involve some tidying up and deciphering of legalese. So, for now, this is
-			the only way to get it to work. Sorry about the inconvenience.
+			involve some tidying up of the interface and deciphering of legalese. 
+			So, for now, this is the only way to get it to work. Sorry about the 
+			inconvenience.
 		</p>
 		<button (click)="showHelp=false; gapiService.clearProblem()">Close</button>
 	</div>
 </div>
 
+<div *ngIf="viewType===ViewTypes.CREATE">
+	<h3>1. Select a location</h3>
+	<div *ngIf="selectedFile">{{selectedFile.name}}</div>
+	<div><button (click)="chooseFolder()">Choose Folder</button></div>
+	<h3>2. Choose a file name</h3>
+		<span class="fNameBg">
+			<input placeholder="File Name" [(ngModel)]="newFileName" class="fNameIn">
+		</span>
+	<h3>3. Pick a File Type</h3>
+	<ul class="types">
+		<li *ngFor="let editor of EditorComponent.ngEditors">
+			<button (click)="createFile(editor.mimeType)">
+				{{editor.hrName}}
+			</button>
+		</li>
+	</ul>
+</div>
+
+<div *ngIf="viewType===ViewTypes.CREATING">
+Creating File...
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<editor></editor>
+<fact-set-editor></fact-set-editor>
 <fact-set-editor></fact-set-editor>

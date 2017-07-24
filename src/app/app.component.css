@@ -42,13 +42,13 @@ ul.header-buttons > li
 {
 	display: table-cell;
 	padding: 0;
-	border-right: 1px solid var(--divider-color);
+	border-left: 1px solid var(--divider-color);
 	width: 8em;
 }
 
 ul.header-buttons > li:last-child
 {
-	border-right: 0;
+	border-right: 1px solid var(--divider-color);;
 }
 
 .header-button
@@ -84,5 +84,21 @@ ul.header-buttons > li:last-child
 	text-align: justify;
 }
 
+div.pad
+{
+	padding: 0.4em;
+}
 
+ul.types > li
+{
+	display: inline-block;
+	padding: 0.4em;
+}
+
+.fNameBg
+{
+	padding: .5em 1em;
+	border-radius: 8px;
+	background-color: #EEE;
+}
 

@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { JaxInputComponent } from './jax-input.component';
+import { BookEditorComponent } from './book-editor.component';
 
-describe('JaxInputComponent', () => {
-  let component: JaxInputComponent;
-  let fixture: ComponentFixture<JaxInputComponent>;
+describe('BookEditorComponent', () => {
+  let component: BookEditorComponent;
+  let fixture: ComponentFixture<BookEditorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JaxInputComponent ]
+      declarations: [ BookEditorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(JaxInputComponent);
+    fixture = TestBed.createComponent(BookEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,26 @@
+<div *ngIf="loading">
+Loading document...
+</div>
+
+<div *ngIf="editing">
+	<div *ngIf="editingRoot" class="centerEverything">
+		<div class="contentBox">
+			<div class="header">
+				<span>
+					Characters
+				</span>
+				<button class="trans">
+					<img src="assets/navigation/down_min.svg" alt="expand">
+				</button>
+			</div>
+		</div>
+		<div class="header">
+			<span>
+				Groups Of Characters
+			</span>
+			<button class="trans">
+				<img src="assets/navigation/down_min.svg" alt="expand">
+			</button>
+		</div>
+	</div>
+</div>

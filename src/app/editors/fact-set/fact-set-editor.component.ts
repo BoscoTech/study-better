@@ -27,7 +27,11 @@ export class FactSetEditorComponent extends EditorComponent {
 		}
 	}
 	
-	get mimeType(): any {
+	get hrName(): string {
+		return "FactSet";
+	}
+	
+	get mimeType(): string {
 		return "application/prs.study-better.fact-set";
 	}
 	

@@ -1,1 +1,0 @@
-ng github-pages:deploy

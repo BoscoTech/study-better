@@ -1,5 +1,4 @@
-header
-{
+header {
 	position: fixed;
 	width: 100%;
 	height: 4em;
@@ -7,52 +6,44 @@ header
 	background-color: var(--accent-color);
 }
 
-header>div
-{
+header>div {
 	display: table;
 	padding: .5em 1em;
 	height: 3em;
 	overflow: hidden;
 }
 
-header>div *
-{
+header>div * {
 	display: table-cell;
 	vertical-align: middle;
 }
 
-.title
-{
+.title {
 	color: var(--text-primary-color);
 	font-size: 2em;
 }
 
-.spacer
-{
+.spacer {
 	width: 1em;
 }
 
-ul.header-buttons
-{
+ul.header-buttons {
 	list-style-type: none;
 	padding: 0;
 }
 
-ul.header-buttons > li
-{
+ul.header-buttons > li {
 	display: table-cell;
 	padding: 0;
 	border-left: 1px solid var(--divider-color);
 	width: 8em;
 }
 
-ul.header-buttons > li:last-child
-{
-	border-right: 1px solid var(--divider-color);;
+ul.header-buttons > li:last-child {
+	border-right: 1px solid var(--divider-color);
 }
 
-.header-button
-{
+.header-button {
 	padding: .5em 0;
 	width: 100%;
 	line-height: 2em;
@@ -63,40 +54,33 @@ ul.header-buttons > li:last-child
 	border-radius: 0px;
 }
 
-.header-button:hover
-{	
+.header-button:hover {	
 	background-color: rgba(255, 255, 255, 0.1);
 }
 
-.header-button:active
-{
+.header-button:active {
 	background-color: rgba(255, 255, 255, 0.3);
 }
 
-.spacing
-{
+.spacing {
 	height: 4em;
 }
 
-.narrow
-{
+.narrow {
 	width: 24em;
 	text-align: justify;
 }
 
-div.pad
-{
+div.pad {
 	padding: 0.4em;
 }
 
-ul.types > li
-{
+ul.types > li {
 	display: inline-block;
 	padding: 0.4em;
 }
 
-.fNameBg
-{
+.fNameBg {
 	padding: .5em 1em;
 	border-radius: 8px;
 	background-color: #EEE;

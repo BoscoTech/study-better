@@ -178,7 +178,7 @@ export class PickerService {
 		if(this.gapiService.ngSignedIn)
 			tr = tr.setOAuthToken(this.gapiService.oAuthToken);
 		tr = tr.setAppId(window['client_id']);
-		tr = tr.setDeveloperKey(window['api_key']);
+		//tr = tr.setDeveloperKey(window['api_key']);
 		return tr;
 	}
 	

@@ -13,6 +13,7 @@ import { EditorComponent } from './editors/editor.component';
 import { FactSetEditorComponent } from './editors/fact-set/fact-set-editor.component';
 import { InjectorRef } from "app/injector-ref";
 import { PickerService } from "app/gwrap/picker.service";
+import { BookEditorComponent } from './editors/book-editor/book-editor.component';
 
 @NgModule
 ({
@@ -22,7 +23,8 @@ import { PickerService } from "app/gwrap/picker.service";
 		JaxComponent,
 		FormattedInputComponent,
 		EditorComponent,
-		FactSetEditorComponent
+		FactSetEditorComponent,
+		BookEditorComponent
 	],
 	imports: 
 	[

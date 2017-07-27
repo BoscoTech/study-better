@@ -2,18 +2,16 @@
 
 /* Google font. URL: https://fonts.google.com/specimen/Quicksand */
 @import url(https://fonts.googleapis.com/css?family=Quicksand);
-/* Material design color pallette. URL: https://www.materialpalette.com/light-green/indigo */
+/* Material design color pallette. */
 @import 'palette.css';
 
-body
-{
+body {
 	font-family: 'Quicksand' !important;
 	color: var(--primary-text-color);
 	margin: 0;
 }
 
-input
-{
+input {
 	font-size: 1em;
 	line-height: 1em;
 	padding: 0;
@@ -21,38 +19,32 @@ input
 	background-color: transparent;
 }
 
-input:focus
-{
+input:focus {
 	outline-style: none;
 	//border-bottom: 2px solid var(--accent-color);
 	background-color: rgba(255, 255, 255, 0.2);
 }
 
-select
-{
+select {
 	border: 0;
 	text-indent: 0;
 	background-color: transparent;
 }
 
-select > option
-{
+select > option {
 	padding: 0;
 }
 
-select:focus
-{
+select:focus {
 	outline-style: none;
 }
 
-ul
-{
+ul {
 	list-style-type: none;
 	padding: 0em;
 }
 
-button
-{
+button {
 	outline: 0;
 	background-color: #EEE;
 	border: none;
@@ -63,18 +55,32 @@ button
 	cursor: pointer;
 }
 
-button:hover
-{
+button:hover {
 	outline: 0;
 	background-color: var(--default-primary-color);
 	transition: background-color 0.1s;
 }
 
-button:active
-{
+button:active {
 	outline: 0;
 	background-color: var(--light-primary-color);
 	transition: background-color 0.01s;
+}
+
+button.trans {
+	background-color: rgba(255, 255, 255, 0.0);
+}
+
+button.trans:hover {
+	background-color: rgba(255, 255, 255, 0.25);
+}
+
+button.trans:active {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+button.narrow {
+	padding: .5em;
 }
 
 .noselect {

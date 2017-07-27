@@ -1,0 +1,38 @@
+div.contentBox {
+	width: 25em;
+	height: 2em;
+	padding: 0em;
+	background-color: #DDD;
+	border-radius: 8px;
+}
+
+div.header {
+	width: 23em;
+	height: 1.6em;
+	padding: .2em 1em;
+	text-align: center;
+	font-weight: bold;
+}
+
+div.header>span {
+	position: relative;
+	display: inline-block;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+div.header>button {
+	width: 1.6em;
+	height: 1.6em;
+	padding: 0;
+	float: right;
+}
+
+div.header>button>img {
+	width: inherit;
+	height: inherit;
+}
+
+div.centerEverything>* {
+	margin: auto;
+}

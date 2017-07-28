@@ -1,0 +1,22 @@
+:host {
+	display: inline-block;
+	height: 1.6em;
+}
+
+button {
+	display: inline-block;
+	width: auto;
+	height: inherit;
+	padding: 0;
+}
+
+button>img {
+	width: auto;
+	height: inherit;
+	transition: .2s ease-in-out;
+	transform: rotate(0deg);
+}
+
+button>img.rotated {
+	transform: rotate(180deg);
+}

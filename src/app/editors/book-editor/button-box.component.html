@@ -1,0 +1,8 @@
+<ng-container *ngFor="let c of bclasses">
+	<button *ngIf="buttons&&buttons[c[0]]" 
+		(click)="buttons[c[0]].click(buttons[c[0]])"
+		class="{{buttonClass}}">
+		<img src="assets/navigation/{{c[1]}}.svg" 
+			[class.rotated]="buttons[c[0]].state==ButtonState.ROTATED">
+	</button>
+</ng-container>

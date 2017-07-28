@@ -1,0 +1,35 @@
+:host {
+	width: 40em;
+	display: block;
+}
+
+div.root {
+	width: auto;
+	height: 1em;
+	padding: .5em;
+	background-color: #DDD;
+	border-radius: 8px;
+	transition: height .2s ease-in-out;
+	overflow: hidden;
+}
+
+div.header {
+	width: auto;
+	height: 1.6em;
+	padding: .2em;
+	text-align: center;
+	font-weight: bold;
+	margin: -.5em -.5em 0em;	
+}
+
+div.header>span.label {
+	position: relative;
+	display: inline-block;
+	top: 50%;
+	transform: translateY(-50%);	
+}
+
+div.header>button-box {
+	height: 1.6em;
+	float: right;	
+}

@@ -2,25 +2,13 @@
 Loading document...
 </div>
 
-<div *ngIf="editing">
-	<div *ngIf="editingRoot" class="centerEverything">
-		<div class="contentBox">
-			<div class="header">
-				<span>
-					Characters
-				</span>
-				<button class="trans">
-					<img src="assets/navigation/down_min.svg" alt="expand">
-				</button>
-			</div>
-		</div>
-		<div class="header">
-			<span>
-				Groups Of Characters
-			</span>
-			<button class="trans">
-				<img src="assets/navigation/down_min.svg" alt="expand">
-			</button>
-		</div>
-	</div>
+<div *ngIf="editing" class="centerEverything">
+	<span *ngIf="editingRoot">
+		<hide-box title="Test Hide Box" (click)="log('something got clicked')">
+			<hide-box title="Sub box">sub box content</hide-box>
+			<hide-box title="Sub box">sub box content</hide-box>
+			<hide-box title="Sub box">sub box content</hide-box>
+			<hide-box title="Sub box">sub box content</hide-box>
+		</hide-box>
+	</span>
 </div>

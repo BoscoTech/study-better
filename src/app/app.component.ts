@@ -164,6 +164,11 @@ export class AppComponent implements OnInit
 			.setCallback((v: any) => this.setSelected(v))
 			.build().setVisible(true);
 	}
+	
+	ccb(button: any): void {
+		window.console.log(button);
+		button.state = 3;
+	}
 }
 
 

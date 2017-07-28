@@ -66,6 +66,10 @@ export class BookEditorComponent extends EditorComponent {
 		return "application/prs.study-better.book";
 	}
 	
+	get log(): any {
+		return window.console.log;
+	}
+	
 	constructor(private _cdr: ChangeDetectorRef) {
 		super(_cdr);
 	}

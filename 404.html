@@ -10,12 +10,13 @@
 
 	<!-- GAPI Loaded Callback -->
 	<script type="text/javascript">
+		window.api_key = 'AIzaSyAn0Y9g_4HSxfVAro6nd5rUuiZDYS1eBOk';
 		window.client_id = '793573643843-tvo4gbajk3joidsrjsu7giesf3m6mrnp.apps.googleusercontent.com';
 		window.scope = 'profile https://www.googleapis.com/auth/drive';
 	
 		//Called when the empty gapi is loaded. At this point, gapi is basically just a loader for google apis.
 		function onGapiLoad() {
-			gapi.load("client:auth2,drive-realtime", login) //Load some actual apis.		
+			gapi.load("client:auth2,drive-realtime,picker", login) //Load some actual apis.		
 		}
 	
 		function loginCallback(result) {
@@ -40,8 +41,8 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
 	</script>
 	
-<link href="styles.fcd71e8db92f2d41429a.bundle.css" rel="stylesheet"/></head>
+<link href="styles.6e32ac6b20d46f95fe93.bundle.css" rel="stylesheet"/></head>
 <body>
 	<app-root>Loading...</app-root>
-<script type="text/javascript" src="inline.4406a1818e8facedf241.bundle.js"></script><script type="text/javascript" src="polyfills.a18dabc7452bc97199b6.bundle.js"></script><script type="text/javascript" src="main.f8a99465c07b968a4fab.bundle.js"></script></body>
+<script type="text/javascript" src="inline.87fb687bc55ab8106970.bundle.js"></script><script type="text/javascript" src="polyfills.a38989d5df085dbef2a2.bundle.js"></script><script type="text/javascript" src="main.d253fc5ead2d2dd76796.bundle.js"></script></body>
 </html>

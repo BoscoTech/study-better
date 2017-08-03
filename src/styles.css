@@ -16,13 +16,32 @@ input {
 	line-height: 1em;
 	padding: 0;
 	border: 0;
-	background-color: transparent;
+	border-radius: 8px;
+	background-color: #EEE;
+	transition: background-color 0.3s;
+}
+
+input:hover {
+	background-color: var(--default-primary-color);
+	transition: background-color 0.1s;	
 }
 
 input:focus {
 	outline-style: none;
-	//border-bottom: 2px solid var(--accent-color);
-	background-color: rgba(255, 255, 255, 0.2);
+	background-color: var(--light-primary-color);
+	transition: background-color 0.01s;
+}
+
+input.trans {
+	background-color: transparent;	
+}
+
+input.trans:hover {
+	background-color: rgba(255, 255, 255, 0.25);
+}
+
+input.trans:focus {
+	background-color: rgba(255, 255, 255, 0.6);
 }
 
 select {
@@ -93,7 +112,18 @@ button.narrow {
                           supported by Chrome and Opera */
 }
 
+textarea {
+	border: 0;
+	border-radius: 8px;
+	//box-shadow: 0 0 12px -4px #000;
+	background: #EEE;
+}
 
+textarea:hover {
+	outline-style: none;
+}
 
-
+textarea:focus {
+	outline-style: none;
+}
 

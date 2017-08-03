@@ -16,6 +16,8 @@ import { PickerService } from "app/gwrap/picker.service";
 import { BookEditorComponent } from './editors/book-editor/book-editor.component';
 import { HideBoxComponent } from './editors/book-editor/hide-box.component';
 import { ButtonBoxComponent } from './editors/book-editor/button-box.component';
+import { ListItemComponent } from './editors/book-editor/list-item.component';
+import { ExpandingTextAreaComponent } from './editors/book-editor/expanding-text-area.component';
 
 @NgModule
 ({
@@ -28,7 +30,9 @@ import { ButtonBoxComponent } from './editors/book-editor/button-box.component';
 		FactSetEditorComponent,
 		BookEditorComponent,
 		HideBoxComponent,
-		ButtonBoxComponent
+		ButtonBoxComponent,
+		ListItemComponent,
+		ExpandingTextAreaComponent
 	],
 	imports: 
 	[

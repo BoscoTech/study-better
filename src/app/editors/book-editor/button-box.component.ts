@@ -14,7 +14,7 @@ export enum ButtonState {
 export class ButtonBoxComponent {
 	readonly bclasses = [['p', 'add'], ['x', 'cancel'], ['v', 'down_min']];
 	@Input('buttons') buttons: any;
-	@Input('button-class') buttonClass: string;
+	@Input('buttonClass') buttonClass: string;
 	
 	get ButtonState() {
 		return ButtonState;

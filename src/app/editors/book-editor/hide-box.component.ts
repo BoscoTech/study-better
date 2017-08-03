@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Renderer, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, Renderer, ViewChild, HostBinding } from '@angular/core';
 import { ButtonState } from './button-box.component';
 
 @Component({
@@ -7,11 +7,12 @@ import { ButtonState } from './button-box.component';
   styleUrls: ['./hide-box.component.css']
 })
 export class HideBoxComponent {
-	expanded = false;
+	@HostBinding('class.expanded') expanded = false;
+	@HostBinding('class.contracted') get contracted() { return !this.expanded; }
 	animating = false;
 	buttons: any = {v: {state: ButtonState.PLAIN, click: (b: any) => this.toggleExpanded()}};
 	@Input('title') title: string = "";
-	@Input('extra-buttons') extraButtons: any = {};
+	@Input('extraButtons') extraButtons: any = {};
 	@ViewChild("root") root: ElementRef;
 	
 	constructor(private renderer: Renderer) {
@@ -26,6 +27,7 @@ export class HideBoxComponent {
 	}
 	
 	expand(): void {
+		if(this.animating || this.expanded) return;
 		this.animating = true;
 		let native = this.root.nativeElement;
 		let comps = window.getComputedStyle(native);
@@ -48,7 +50,7 @@ export class HideBoxComponent {
 	}
 	
 	contract(): void {
-		if(this.animating) return;
+		if(this.animating || !this.expanded) return;
 		this.animating = true;
 		let native = this.root.nativeElement;
 		let comps = window.getComputedStyle(native);
@@ -60,7 +62,7 @@ export class HideBoxComponent {
 			native.style.height = height + "px";
 			native.style.transition = transition;
 			window.requestAnimationFrame(() => {
-				native.style.height = "1em";
+				native.style.height = "1.6em";
 				setTimeout(() => {
 					let remove = this.renderer.listen(native, 'transitionend', (e: any) => {
 						remove();

@@ -5,8 +5,8 @@
 
 div.root {
 	width: auto;
-	height: 1em;
-	padding: .5em;
+	height: 1.6em;
+	padding: 8px;
 	background-color: #DDD;
 	border-radius: 8px;
 	transition: height .2s ease-in-out;
@@ -16,10 +16,10 @@ div.root {
 div.header {
 	width: auto;
 	height: 1.6em;
-	padding: .2em;
+	padding: 0;
 	text-align: center;
 	font-weight: bold;
-	margin: -.5em -.5em 0em;	
+	margin-bottom: 8px;	
 }
 
 div.header>span.label {

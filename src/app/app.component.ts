@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, QueryList, ViewChild, ViewChildren, } from '@angular/core';
+import { Component, OnInit, NgZone, QueryList, ViewChild, ViewChildren, ViewContainerRef, } from '@angular/core';
 import { GapiService, Response } from './gwrap/gapi.service';
 import { DriveService, FileR, FileListR, DriveUtil } from './gwrap/drive.service';
 import { JaxComponent } from './jax/jax.component';
@@ -47,13 +47,15 @@ export class AppComponent implements OnInit
 			private driveService: DriveService, 
 			private realtimeService: Realtime.RealtimeService, 
 			private ngZone: NgZone,
-			private picker: PickerService) {
+			private picker: PickerService,
+			private vcr: ViewContainerRef) {
 		window["appComponent"] = this;
 		window["Formats"] = Formats;
 	}
 	
 	ngOnInit(): void {
 		this.gapiService.loaded.listen((v: boolean) => this.ngZone.run(() => this.onAuthLoad()));
+		this.testInit();
 	}
 	
 	onAuthLoad(): void {
@@ -71,13 +73,15 @@ export class AppComponent implements OnInit
 	}
 	
 	onAccountButtonPressed(): void {
-		if(this.gapiService.loaded) {
+		try {
 			if(this.gapiService.signedIn.get()) {
 				//this.gapiService.auth2.signOut();
 				alert("Sorry, there was an error. It was completely Google's fault. Send them an angry email about how bad their programmers are.");
 			} else {
 				this.gapiService.signIn(true);
 			}
+		} catch(Exception) {
+			
 		}
 	}
 	
@@ -165,9 +169,10 @@ export class AppComponent implements OnInit
 			.build().setVisible(true);
 	}
 	
-	ccb(button: any): void {
-		window.console.log(button);
-		button.state = 3;
+	//Designated test zone.
+	testString: string;
+	testInit(): void {
+		
 	}
 }
 

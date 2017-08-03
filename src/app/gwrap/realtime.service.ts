@@ -227,6 +227,18 @@ export class RealtimeService {
 		}
 	}
 	
+	beginCompundOperation(name?: string, isUndoable?: boolean): void {
+		if(this._model) {
+			this._model.beginCompoundOperation(name, isUndoable);
+		}
+	}
+	
+	endCompoundOperation(): void {
+		if(this._model) {
+			this._model.endCompoundOperation();
+		}
+	}
+	
 	initFileFromObject(json: any): void {
 		if(this._model) {
 			this._model.beginCompoundOperation();

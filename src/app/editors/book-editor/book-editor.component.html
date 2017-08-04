@@ -43,7 +43,7 @@ Loading document...
 					<list-item *ngFor="let relation of character.get('relationships').asArray(); let irel = index"
 						(delete)="character.get('relationships').remove(irel)">
 						<div class="double-stack-box">
-							<div class="relation">
+							<div class="relationship">
 								<input class="type" placeholder="Relationship type" [(ngModel)]="relation.get(0).text">
 								<span class="of">of</span>
 								<select class="person" [(ngModel)]="relation.get(1).text">
@@ -87,6 +87,9 @@ Loading document...
 					</div>
 				</hide-box>
 			</hide-box>
+			<div *ngIf="getPath('characters').length==0">
+				No one has added a character yet. Click the + button to add one!
+			</div>
 		</hide-box>
 		<!-- Events -->
 		<hide-box *ngIf="getPath('events')" title="Events"
@@ -167,6 +170,154 @@ Loading document...
 					</div>
 				</hide-box>
 			</hide-box>
+			<div *ngIf="getPath('events').length==0">
+				No one has added an event yet. Click the + button to add one!
+			</div>
+		</hide-box>
+		<!-- Objects -->
+		<hide-box *ngIf="getPath('objects')" title="Objects"
+			[extraButtons]="{p: createPushObjectButton(getPath('objects'), objectTemplate)}">
+			<!-- An object -->
+			<hide-box *ngFor="let object of getPath('objects').asArray(); let iobj = index;"
+				[title]="object.get('names').get(0).get(0).text"
+				[extraButtons]="{x: createDeleteIndexButton(getPath('objects'), iobj)}">
+				<!-- Names -->
+				<hide-box *ngIf="object.get('names')" title="Names and Nicknames"
+					[extraButtons]="{p: createPushObjectButton(object.get('names'), nameTemplate)}">
+					<ng-container *ngFor="let name of object.get('names').asArray(); let iname = index"> 
+						<input *ngIf="iname===0" class="fill-parent" style="height: 1.6em;" [(ngModel)]="name.get(0).text">
+						<list-item *ngIf="iname>0"
+							(delete)="object.get('names').remove(iname)">
+							<div class="double-stack-box">
+								<input class="fill-parent" [(ngModel)]="name.get(0).text">
+								<br *ngIf="iname>0">
+								<expanding-text-area *ngIf="iname>0" [(ngModel)]="name.get(1).text"
+									placeholder="Description (why was this name given, etc?)">
+								</expanding-text-area>
+							</div>
+						</list-item>
+					</ng-container>
+					<div *ngIf="object.get('names').length<=1">
+						Press + to add a nickname / epithet / alternate spelling / etc.
+					</div>
+				</hide-box>
+				<!-- Description -->
+				<hide-box *ngIf="object.get('description')" title="Description">
+					<expanding-text-area [(ngModel)]="object.get('description').text"
+						placeholder="Description">
+					</expanding-text-area>
+				</hide-box>
+				<!-- Archetypes -->
+				<hide-box *ngIf="object.get('archetypes')" title="Lit Terms / Archetypes"
+					[extraButtons]="{p: createPushObjectButton(object.get('archetypes'), archetypeTemplate)}">
+					<list-item *ngFor="let archetype of object.get('archetypes').asArray(); let iarc = index"
+						(delete)="object.get('archetypes').remove(iarc)">
+						<div class="double-stack-box">
+							<input class="fill-parent" [(ngModel)]="archetype.get(0).text"
+								placeholder="Name of lit term / archetype">
+							<br>
+							<expanding-text-area [(ngModel)]="archetype.get(1).text"
+								placeholder="Describe how the archetype is fulfilled. Add CITATIONS to show why your description is correct!">
+							</expanding-text-area>
+						</div>
+					</list-item>
+					<div *ngIf="object.get('archetypes').length==0">
+						No one has added any lit terms or archetypes yet. Click the + button to add one!
+					</div>
+				</hide-box>
+			</hide-box>
+			<div *ngIf="getPath('objects').length==0">
+				No one has added an object yet. Click the + button to add one!
+			</div>
+		</hide-box>
+		<!-- Places -->
+		<hide-box *ngIf="getPath('places')" title="Places"
+			[extraButtons]="{p: createPushObjectButton(getPath('places'), placeTemplate)}">
+			<!-- A place -->
+			<hide-box *ngFor="let place of getPath('places').asArray(); let iobj = index;"
+				[title]="place.get('names').get(0).get(0).text"
+				[extraButtons]="{x: createDeleteIndexButton(getPath('places'), iobj)}">
+				<!-- Names -->
+				<hide-box *ngIf="place.get('names')" title="Names and Nicknames"
+					[extraButtons]="{p: createPushObjectButton(place.get('names'), nameTemplate)}">
+					<ng-container *ngFor="let name of place.get('names').asArray(); let iname = index"> 
+						<input *ngIf="iname===0" class="fill-parent" style="height: 1.6em;" [(ngModel)]="name.get(0).text">
+						<list-item *ngIf="iname>0"
+							(delete)="place.get('names').remove(iname)">
+							<div class="double-stack-box">
+								<input class="fill-parent" [(ngModel)]="name.get(0).text">
+								<br *ngIf="iname>0">
+								<expanding-text-area *ngIf="iname>0" [(ngModel)]="name.get(1).text"
+									placeholder="Description (why was this name given, etc?)">
+								</expanding-text-area>
+							</div>
+						</list-item>
+					</ng-container>
+					<div *ngIf="place.get('names').length<=1">
+						Press + to add a nickname / epithet / alternate spelling / etc.
+					</div>
+				</hide-box>
+				<!-- Description -->
+				<hide-box *ngIf="place.get('description')" title="Description">
+					<expanding-text-area [(ngModel)]="place.get('description').text"
+						placeholder="Description">
+					</expanding-text-area>
+				</hide-box>
+				<!-- Relationships -->
+				<hide-box *ngIf="place.get('relations')" title="Relations To Other Places"
+					[extraButtons]="{p: createPushObjectButton(place.get('relations'), placeRefTemplate)}">
+					<list-item *ngFor="let relation of place.get('relations').asArray(); let irel = index"
+						(delete)="place.get('relations').remove(irel)">
+						<div class="relation">
+							<select class="type" [(ngModel)]="relation.get(0).text">
+								<option value="null">
+									--Select a Relation Type--
+								</option>
+								<option *ngFor="let type of placeRelationTypes"
+									[value]="type">
+									{{type}}
+								</option>
+							</select>
+							<br>
+							<select class="person" [(ngModel)]="relation.get(1).text">
+								<option value="null">
+									--Select a Place--
+								</option>
+								<ng-container *ngFor="let place of getPath('places').asArray()"> 
+									<option *ngIf="true"
+										[value]="place.get('names').get(0).get(0).id">
+										{{place.get('names').get(0).get(0).text}}
+									</option>
+								</ng-container>
+							</select>
+						</div>
+					</list-item>
+					<div *ngIf="place.get('relations').length==0">
+						No one has added any relations yet. Click the + button to add one!
+					</div>
+				</hide-box>
+				<!-- Archetypes -->
+				<hide-box *ngIf="place.get('archetypes')" title="Lit Terms / Archetypes"
+					[extraButtons]="{p: createPushObjectButton(place.get('archetypes'), archetypeTemplate)}">
+					<list-item *ngFor="let archetype of place.get('archetypes').asArray(); let iarc = index"
+						(delete)="place.get('archetypes').remove(iarc)">
+						<div class="double-stack-box">
+							<input class="fill-parent" [(ngModel)]="archetype.get(0).text"
+								placeholder="Name of lit term / archetype">
+							<br>
+							<expanding-text-area [(ngModel)]="archetype.get(1).text"
+								placeholder="Describe how the archetype is fulfilled. Add CITATIONS to show why your description is correct!">
+							</expanding-text-area>
+						</div>
+					</list-item>
+					<div *ngIf="place.get('archetypes').length==0">
+						No one has added any lit terms or archetypes yet. Click the + button to add one!
+					</div>
+				</hide-box>
+			</hide-box>
+			<div *ngIf="getPath('places').length==0">
+				No one has added a place yet. Click the + button to add one!
+			</div>
 		</hide-box>
 	</span>
 </div>

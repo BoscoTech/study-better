@@ -89,6 +89,7 @@ export class BookEditorComponent extends EditorComponent {
 			archetypes: []
 	};
 	readonly placeRefTemplate = ["null", "null"];
+	readonly placeRelationTypes = ["North of", "South of", "East of", "West of", "Above", "Below", "Inside of", "Contains"]; 
 	
 	get defaultDataStructure(): any {
 		return {
@@ -115,7 +116,7 @@ export class BookEditorComponent extends EditorComponent {
 			places: [{
 				names: [["Example Place", ""]],
 				description: "Home of the Thing.",
-				relations: ["South of", "null"],
+				relations: [["South of", "null"]],
 				archetypes: [["Haven vs. Wilderness", "It's better than the surrounding wilderness.\n'I'm sure glad that we found this haven in the middle of the wilderness!' (Author, 333)"]]
 			}]
 		}

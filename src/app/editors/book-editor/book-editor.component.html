@@ -3,7 +3,7 @@ Loading document...
 </div>
 
 <div *ngIf="editing" class="centerEverything">
-	<span *ngIf="editingRoot">
+	<span id="editorRoot" *ngIf="editingRoot">
 		<!-- Characters -->
 		<hide-box *ngIf="getPath('characters')" title="Characters"
 			[extraButtons]="{p: createPushObjectButton(getPath('characters'), characterTemplate)}">
@@ -14,17 +14,22 @@ Loading document...
 				<!-- Names -->
 				<hide-box *ngIf="character.get('names')" title="Names and Nicknames"
 					[extraButtons]="{p: createPushObjectButton(character.get('names'), nameTemplate)}">
-					<list-item *ngFor="let name of character.get('names').asArray(); let iname = index"
-						(delete)="character.get('names').remove(iname)">
-						<div *ngIf="iname>0" class="double-stack-box">
-							<input class="fill-parent" [(ngModel)]="name.get(0).text">
-							<br *ngIf="iname>0">
-							<expanding-text-area *ngIf="iname>0" [(ngModel)]="name.get(1).text"
-								placeholder="Description (why was this name given, etc?)">
-							</expanding-text-area>
-						</div>
-						<input *ngIf="iname===0" class="fill-parent" [(ngModel)]="name.get(0).text">
-					</list-item>
+					<ng-container *ngFor="let name of character.get('names').asArray(); let iname = index"> 
+						<input *ngIf="iname===0" class="fill-parent" style="height: 1.6em;" [(ngModel)]="name.get(0).text">
+						<list-item *ngIf="iname>0"
+							(delete)="character.get('names').remove(iname)">
+							<div class="double-stack-box">
+								<input class="fill-parent" [(ngModel)]="name.get(0).text">
+								<br *ngIf="iname>0">
+								<expanding-text-area *ngIf="iname>0" [(ngModel)]="name.get(1).text"
+									placeholder="Description (why was this name given, etc?)">
+								</expanding-text-area>
+							</div>
+						</list-item>
+					</ng-container>
+					<div *ngIf="character.get('names').length<=1">
+						Press + to add a nickname / epithet / alternate spelling / etc.
+					</div>
 				</hide-box>
 				<!-- Description -->
 				<hide-box *ngIf="character.get('description')" title="Description">
@@ -39,9 +44,19 @@ Loading document...
 						(delete)="character.get('relationships').remove(irel)">
 						<div class="double-stack-box">
 							<div class="relation">
-								<input class="type" placeholder="Cousin" [(ngModel)]="relation.get(0).text">
+								<input class="type" placeholder="Relationship type" [(ngModel)]="relation.get(0).text">
 								<span class="of">of</span>
-								<input class="person" placeholder="Bill Nye the Science Guy" [(ngModel)]="relation.get(1).text">
+								<select class="person" [(ngModel)]="relation.get(1).text">
+									<option value="null">
+										--Select a Character--
+									</option>
+									<ng-container *ngFor="let character of getPath('characters').asArray()"> 
+										<option *ngIf="true"
+											[value]="character.get('names').get(0).get(0).id">
+											{{character.get('names').get(0).get(0).text}}
+										</option>
+									</ng-container>
+								</select>
 							</div>
 							<br>
 							<expanding-text-area [(ngModel)]="relation.get(2).text"
@@ -49,23 +64,123 @@ Loading document...
 							</expanding-text-area>
 						</div>
 					</list-item>
+					<div *ngIf="character.get('relationships').length==0">
+						No one has added any relationships yet. Click the + button to add one!
+					</div>
 				</hide-box>
 				<!-- Archetypes -->
-				<hide-box *ngIf="character.get('archetypes')" title="Archetypes"
+				<hide-box *ngIf="character.get('archetypes')" title="Lit Terms / Archetypes"
 					[extraButtons]="{p: createPushObjectButton(character.get('archetypes'), archetypeTemplate)}">
 					<list-item *ngFor="let archetype of character.get('archetypes').asArray(); let iarc = index"
 						(delete)="character.get('archetypes').remove(iarc)">
 						<div class="double-stack-box">
 							<input class="fill-parent" [(ngModel)]="archetype.get(0).text"
-								placeholder="Name of archetype">
+								placeholder="Name of lit term / archetype">
 							<br>
 							<expanding-text-area [(ngModel)]="archetype.get(1).text"
 								placeholder="Describe how the archetype is fulfilled. Add CITATIONS to show why your description is correct!">
 							</expanding-text-area>
 						</div>
 					</list-item>
+					<div *ngIf="character.get('archetypes').length==0">
+						No one has added any lit terms or archetypes yet. Click the + button to add one!
+					</div>
+				</hide-box>
+			</hide-box>
+		</hide-box>
+		<!-- Events -->
+		<hide-box *ngIf="getPath('events')" title="Events"
+			[extraButtons]="{p: createPushObjectButton(getPath('events'), eventTemplate)}">
+			<!-- An event -->
+			<hide-box *ngFor="let event of getPath('events').asArray(); let ient = index;"
+				[title]="event.get('names').get(0).get(0).text"
+				[extraButtons]="{x: createDeleteIndexButton(getPath('events'), ient)}">
+				<!-- Names -->
+				<hide-box *ngIf="event.get('names')" title="Names and Nicknames"
+					[extraButtons]="{p: createPushObjectButton(event.get('names'), nameTemplate)}">
+					<ng-container *ngFor="let name of event.get('names').asArray(); let iname = index"> 
+						<input *ngIf="iname===0" class="fill-parent" style="height: 1.6em;" [(ngModel)]="name.get(0).text">
+						<list-item *ngIf="iname>0"
+							(delete)="event.get('names').remove(iname)">
+							<div class="double-stack-box">
+								<input class="fill-parent" [(ngModel)]="name.get(0).text">
+								<br *ngIf="iname>0">
+								<expanding-text-area *ngIf="iname>0" [(ngModel)]="name.get(1).text"
+									placeholder="Description (why was this name given, etc?)">
+								</expanding-text-area>
+							</div>
+						</list-item>
+					</ng-container>
+					<div *ngIf="event.get('names').length<=1">
+						Press + to add a nickname / epithet / alternate spelling / etc.
+					</div>
+				</hide-box>
+				<!-- Description -->
+				<hide-box *ngIf="event.get('description')" title="Description">
+					<expanding-text-area [(ngModel)]="event.get('description').text"
+						placeholder="Description">
+					</expanding-text-area>
+				</hide-box>
+				<!-- Characters Involved -->
+				<hide-box *ngIf="event.get('characters')" title="Characters Involved"
+					[extraButtons]="{p: createPushObjectButton(event.get('characters'), characterRefTemplate)}">
+					<list-item *ngFor="let character of event.get('characters').asArray(); let ichar = index"
+						(delete)="event.get('characters').remove(ichar)">
+						<div class="double-stack-box">
+							<select class="person" [(ngModel)]="character.get(0).text">
+								<option value="null">
+									--Select a Character--
+								</option>
+								<ng-container *ngFor="let character of getPath('characters').asArray()"> 
+									<option *ngIf="true"
+										[value]="character.get('names').get(0).get(0).id">
+										{{character.get('names').get(0).get(0).text}}
+									</option>
+								</ng-container>
+							</select>
+							<br>
+							<expanding-text-area [(ngModel)]="character.get(1).text"
+								placeholder="Description (how were they involved, what did they do, etc?)">
+							</expanding-text-area>
+						</div>
+					</list-item>
+					<div *ngIf="event.get('characters').length==0">
+						No one has added any characters yet. Click the + button to add one!
+					</div>
+				</hide-box>
+				<!-- Archetypes -->
+				<hide-box *ngIf="event.get('archetypes')" title="Lit Terms / Archetypes"
+					[extraButtons]="{p: createPushObjectButton(event.get('archetypes'), archetypeTemplate)}">
+					<list-item *ngFor="let archetype of event.get('archetypes').asArray(); let iarc = index"
+						(delete)="event.get('archetypes').remove(iarc)">
+						<div class="double-stack-box">
+							<input class="fill-parent" [(ngModel)]="archetype.get(0).text"
+								placeholder="Name of lit term / archetype">
+							<br>
+							<expanding-text-area [(ngModel)]="archetype.get(1).text"
+								placeholder="Describe how the archetype is fulfilled. Add CITATIONS to show why your description is correct!">
+							</expanding-text-area>
+						</div>
+					</list-item>
+					<div *ngIf="event.get('archetypes').length==0">
+						No one has added any lit terms or archetypes yet. Click the + button to add one!
+					</div>
 				</hide-box>
 			</hide-box>
 		</hide-box>
 	</span>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

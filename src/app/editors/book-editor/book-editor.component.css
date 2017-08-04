@@ -6,6 +6,10 @@ hide-box {
 	width: 40em;
 }
 
+span#editorRoot>hide-box {
+	margin-top: 8px;
+}
+
 hide-box hide-box {
 	width: auto;
 	border-radius: 8px;

@@ -127,3 +127,12 @@ textarea:focus {
 	outline-style: none;
 }
 
+select {
+	line-height: 1.6em;
+	font-size: 1em;
+	background-color: #EEE;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+

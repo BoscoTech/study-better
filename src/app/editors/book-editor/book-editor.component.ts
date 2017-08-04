@@ -55,21 +55,69 @@ export class BookEditorComponent extends EditorComponent {
 			archetypes: []
 	};
 	readonly nameTemplate = ["New Name", ""];
-	readonly relationshipTemplate = ["Friend", "Someone", ""];
+	readonly relationshipTemplate = ["Friend", "null", ""];
 	readonly archetypeTemplate = ["", ""];
+	readonly eventTemplate = {
+			names: [["New Event", ""]],
+			description: "An event that was just added.",
+			characters: [],
+			archetypes: []
+	};
+	readonly characterRefTemplate = ["null", ""];
+	readonly characterGroupTemplate = {
+			names: [["New Character Group", ""]],
+			description: "A character group that was just added.",
+			characters: [],
+			archetypes: []
+	};
+	readonly objectTemplate = {
+			names: [["New Object", ""]],
+			description: "An object that was just added.",
+			archetypes: []
+	};
+	readonly objectGroupTemplate = {
+			names: [["New Object Group", ""]],
+			description: "An object group that was just added.",
+			objects: [],
+			archetypes: []
+	};
+	readonly objectRefTemplate = this.characterRefTemplate;
+	readonly placeTemplate = {
+			names: [["New Place", ""]],
+			description: "A place that was just added.",
+			relations: [],
+			archetypes: []
+	};
+	readonly placeRefTemplate = ["null", "null"];
 	
 	get defaultDataStructure(): any {
 		return {
-			characters: [{names: [["Example Character", ""], ["P.R. Son", "Nickname given to them by someone."]], 
+			characters: [{
+				names: [["Example Character", ""], ["P.R. Son", "Nickname given to them by someone."]], 
 				description: "This character is important to the story.", 
-				relationships: [["Father", "someone", "Both of them hate each other."], ["Daughter", "no one", "They get along just fine."]],
+				relationships: [["Father", "null", "Both of them hate each other."], ["Daughter", "null", "They get along just fine."]],
 				archetypes: [["Father-Son Conflict", "Example Character and someone hate each other.\n'I hate you, dad!' (Author, 123)"],
-				             ["Hero", "Brings back the Thing, which causes world peace.\n'Finally, the Thing has brought world peace!' (Author, 321)"]]}],
+				             ["Hero", "Brings back the Thing, which causes world peace.\n'Finally, the Thing has brought world peace!' (Author, 321)"]]
+			}],
 			cgroups: [],
-			events: [],
-			objects: [],
+			events: [{
+				names: [["Example Event", ""]],
+				description: "The event that changed everything.",
+				characters: [["null", "They made the event happen."]],
+				archetypes: [["Climax", "It was the climax of the story.\n'This is the moment where nothing will be the same!' (Author, 222)"]]
+			}],
+			objects: [{
+				names: [["Example Object", ""]],
+				description: "The Thing that brought world peace.",
+				archetypes: [["Wit", "It's witty.\n'This Thing is witty.' (Author, 111)"]]
+			}],
 			ogroups: [],
-			places: []
+			places: [{
+				names: [["Example Place", ""]],
+				description: "Home of the Thing.",
+				relations: ["South of", "null"],
+				archetypes: [["Haven vs. Wilderness", "It's better than the surrounding wilderness.\n'I'm sure glad that we found this haven in the middle of the wilderness!' (Author, 333)"]]
+			}]
 		}
 	}
 	

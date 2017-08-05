@@ -19,7 +19,21 @@ div.header {
 	padding: 0;
 	text-align: center;
 	font-weight: bold;
-	margin-bottom: 8px;	
+	margin-bottom: 8px;
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;	
+}
+
+div.header>span.showoff {
+	text-align: left;
+}
+
+div.header>span.showoff>img {
+	width: 1.6em;
+	height: 1.6em;
+	border-radius: 8px;
+	box-shadow: 0 0 8px -4px;
+	margin-right: 4px;
 }
 
 div.header>span.label {
@@ -32,4 +46,8 @@ div.header>span.label {
 div.header>button-box {
 	height: 1.6em;
 	float: right;	
+}
+
+.right {
+	float: right;
 }

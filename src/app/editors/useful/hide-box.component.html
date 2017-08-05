@@ -1,11 +1,18 @@
-<div class="root" #root>
+<div (click)="clicked($event)" class="root" #root>
 	<div class="header">
+		<span class="showoff">
+			<img *ngFor="let url of showoffIcons"
+				[src]="url"/>
+		</span>
 		<span class="label">
 			{{title}}
 		</span>
-		<button-box button-class="trans"
-			[buttons]="buttons">
-		</button-box>
+		<span>
+			<button-box class="right" 
+				button-class="trans"
+				[buttons]="buttons">
+			</button-box>
+		</span>
 	</div>
 	<div class="content">
 		<ng-content></ng-content>

@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, Renderer, ViewChild, HostBinding } from '@angular/core';
 import { ButtonState } from './button-box.component';
+import { RealtimeService, Collaborator } from "app/gwrap/realtime.service";
 
 @Component({
   selector: 'hide-box',
@@ -13,9 +14,45 @@ export class HideBoxComponent {
 	buttons: any = {v: {state: ButtonState.PLAIN, click: (b: any) => this.toggleExpanded()}};
 	@Input('title') title: string = "";
 	@Input('extraButtons') extraButtons: any = {};
+	@Input('showoffId') showoffId: Array<string> = null;
 	@ViewChild("root") root: ElementRef;
 	
-	constructor(private renderer: Renderer) {
+	get showoffIcons(): Array<string> {
+		if(this.showoffId) {
+			let doc = this.realtime.document;
+			if(doc && !doc.isClosed && doc.getModel()) {
+				let model = doc.getModel();
+				if(model.getRoot().has("showoff")) {
+					let showoff = model.getRoot().get("showoff");
+					let sids = Array<string>();
+					for(let sessionId of showoff.keys()) {
+						let pieces: Array<string> = showoff.get(sessionId).split(".");
+						if(pieces.length >= this.showoffId.length) {
+							let match = true;
+							for(let i = 0; i < this.showoffId.length; i++) {
+								if(pieces[i] !== this.showoffId[i]) {
+									match = false;
+								}
+							}
+							if(match) {
+								sids.push(sessionId);
+							}
+						}
+					}
+					let tr = Array<string>();
+					for(let col of doc.getCollaborators()) {
+						if(sids.indexOf(col.sessionId) !== -1) {
+							tr.push(col.photoUrl);
+						}
+					}
+					return tr;
+				}
+			}
+		}		
+		return [];
+	}
+	
+	constructor(private renderer: Renderer, private realtime: RealtimeService) {
 	}
 	
 	toggleExpanded(): void {
@@ -81,9 +118,27 @@ export class HideBoxComponent {
 		}
 	}
 	
-	
-	
-	
+	clicked(event: MouseEvent) {
+		this.realtime.beginCompundOperation();
+		event.cancelBubble = true;
+		if(this.showoffId) {
+			let doc = this.realtime.document;
+			if(doc && !doc.isClosed && doc.getModel()) {
+				let model = doc.getModel();
+				if(!model.getRoot().has("showoff")) {
+					model.getRoot().set("showoff", this.realtime.createCollaborativeObjectFromObject({}));
+				}
+				let me: Collaborator = null;
+				for(let col of doc.getCollaborators()) {
+					if(col.isMe) {
+						me = col;
+					}
+				}
+				model.getRoot().get("showoff").set(me.sessionId, this.showoffId.join("."));
+			}
+		}
+		this.realtime.endCompoundOperation();
+	}
 	
 	
 	

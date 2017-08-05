@@ -25,7 +25,7 @@ div.header {
 }
 
 div.header>span.showoff {
-	display: inherit;
+	display: flex; /* Because other values have weird formatting, for some reason? */
 	text-align: left;
 }
 

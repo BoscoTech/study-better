@@ -21,6 +21,7 @@
 	
 		function loginCallback(result) {
 			window.gapiLoadedAngularCallback(gapi);
+			scheduleRefresh();
 		}
 		
 		function login() {
@@ -30,6 +31,20 @@
 				scope: window.scope,
 				immediate: true
 			}, loginCallback);
+		}
+		
+		function scheduleRefresh() {
+			setTimeout(refresh, 1000 * 60 * 45); //Refresh token in 45 minutes.
+		}
+		
+		function refresh() {
+			gapi.auth.authorize({
+				//apiKey: 'AIzaSyAn0Y9g_4HSxfVAro6nd5rUuiZDYS1eBOk',
+				client_id: window.client_id,
+				scope: window.scope,
+				immediate: true
+			}, scheduleRefresh);
+			console.log("Token has been refreshed.");
 		}
 	</script>
 	

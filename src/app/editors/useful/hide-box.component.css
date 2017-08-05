@@ -25,6 +25,7 @@ div.header {
 }
 
 div.header>span.showoff {
+	display: inherit;
 	text-align: left;
 }
 

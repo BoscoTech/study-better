@@ -27,7 +27,8 @@ Loading document...
 							</div>
 						</list-item>
 					</ng-container>
-					<div *ngIf="character.get('names').length<=1">
+					<div class="center"
+						*ngIf="character.get('names').length<=1">
 						Press + to add a nickname / epithet / alternate spelling / etc.
 					</div>
 				</hide-box>
@@ -37,22 +38,32 @@ Loading document...
 						placeholder="Description">
 					</expanding-text-area>
 				</hide-box>
-				<!-- Relationships -->
-				<hide-box *ngIf="character.get('relationships')" title="Relationships"
-					[extraButtons]="{p: createPushObjectButton(character.get('relationships'), relationshipTemplate)}">
-					<list-item *ngFor="let relation of character.get('relationships').asArray(); let irel = index"
-						(delete)="character.get('relationships').remove(irel)">
+				<!-- Relations -->
+				<hide-box *ngIf="character.get('relations')" title="Relationships"
+					[extraButtons]="{p: createPushObjectButton(character.get('relations'), relationTemplate)}">
+					<list-item *ngFor="let relation of character.get('relations').asArray(); let irel = index"
+						(delete)="removeCharacterRelation(character, irel)">
 						<div class="double-stack-box">
 							<div class="relationship">
-								<input class="type" placeholder="Relationship type" [(ngModel)]="relation.get(0).text">
+								<select class="type fill-parent" [ngModel]="relation.get(0).text" 
+									(ngModelChange)="setCharacterRelationType(character, relation, $event)">
+									<option value="null">
+										--Select a Relation Type--
+									</option>
+									<option *ngFor="let type of global.characterRelationTypes"
+										[value]="type">
+										{{type}}
+									</option>
+								</select>
 								<span class="of">of</span>
-								<select class="person" [(ngModel)]="relation.get(1).text">
+								<select class="person" [ngModel]="relation.get(1).text" 
+									(ngModelChange)="setCharacterRelationTarget(character, relation, $event)">
 									<option value="null">
 										--Select a Character--
 									</option>
 									<ng-container *ngFor="let character of getPath('characters').asArray()"> 
 										<option *ngIf="true"
-											[value]="character.get('names').get(0).get(0).id">
+											[value]="character.id">
 											{{character.get('names').get(0).get(0).text}}
 										</option>
 									</ng-container>
@@ -64,7 +75,8 @@ Loading document...
 							</expanding-text-area>
 						</div>
 					</list-item>
-					<div *ngIf="character.get('relationships').length==0">
+					<div class="center"
+						*ngIf="character.get('relations').length==0">
 						No one has added any relationships yet. Click the + button to add one!
 					</div>
 				</hide-box>
@@ -74,8 +86,15 @@ Loading document...
 					<list-item *ngFor="let archetype of character.get('archetypes').asArray(); let iarc = index"
 						(delete)="character.get('archetypes').remove(iarc)">
 						<div class="double-stack-box">
-							<input class="fill-parent" [(ngModel)]="archetype.get(0).text"
-								placeholder="Name of lit term / archetype">
+							<select [(ngModel)]="archetype.get(0).text">
+								<option value="null">
+									--Select a Lit Term or Archetype--
+								</option>
+								<option *ngFor="let term of litTermsAndArchetypes"
+									[value]="term">
+									{{term}}
+								</option>
+							</select>
 							<br>
 							<expanding-text-area [(ngModel)]="archetype.get(1).text"
 								placeholder="Describe how the archetype is fulfilled. Add CITATIONS to show why your description is correct!">
@@ -87,7 +106,8 @@ Loading document...
 					</div>
 				</hide-box>
 			</hide-box>
-			<div *ngIf="getPath('characters').length==0">
+			<div class="center"
+				*ngIf="getPath('characters').length==0">
 				No one has added a character yet. Click the + button to add one!
 			</div>
 		</hide-box>
@@ -114,7 +134,8 @@ Loading document...
 							</div>
 						</list-item>
 					</ng-container>
-					<div *ngIf="event.get('names').length<=1">
+					<div class="center"
+						*ngIf="event.get('names').length<=1">
 						Press + to add a nickname / epithet / alternate spelling / etc.
 					</div>
 				</hide-box>
@@ -136,7 +157,7 @@ Loading document...
 								</option>
 								<ng-container *ngFor="let character of getPath('characters').asArray()"> 
 									<option *ngIf="true"
-										[value]="character.get('names').get(0).get(0).id">
+										[value]="character.id">
 										{{character.get('names').get(0).get(0).text}}
 									</option>
 								</ng-container>
@@ -147,7 +168,8 @@ Loading document...
 							</expanding-text-area>
 						</div>
 					</list-item>
-					<div *ngIf="event.get('characters').length==0">
+					<div class="center"
+						*ngIf="event.get('characters').length==0">
 						No one has added any characters yet. Click the + button to add one!
 					</div>
 				</hide-box>
@@ -157,20 +179,28 @@ Loading document...
 					<list-item *ngFor="let archetype of event.get('archetypes').asArray(); let iarc = index"
 						(delete)="event.get('archetypes').remove(iarc)">
 						<div class="double-stack-box">
-							<input class="fill-parent" [(ngModel)]="archetype.get(0).text"
-								placeholder="Name of lit term / archetype">
-							<br>
+							<select [(ngModel)]="archetype.get(0).text">
+								<option value="null">
+									--Select a Lit Term or Archetype--
+								</option>
+								<option *ngFor="let term of litTermsAndArchetypes"
+									[value]="term">
+									{{term}}
+								</option>
+							</select>
 							<expanding-text-area [(ngModel)]="archetype.get(1).text"
 								placeholder="Describe how the archetype is fulfilled. Add CITATIONS to show why your description is correct!">
 							</expanding-text-area>
 						</div>
 					</list-item>
-					<div *ngIf="event.get('archetypes').length==0">
+					<div class="center"
+						*ngIf="event.get('archetypes').length==0">
 						No one has added any lit terms or archetypes yet. Click the + button to add one!
 					</div>
 				</hide-box>
 			</hide-box>
-			<div *ngIf="getPath('events').length==0">
+			<div class="center"
+				*ngIf="getPath('events').length==0">
 				No one has added an event yet. Click the + button to add one!
 			</div>
 		</hide-box>
@@ -197,7 +227,8 @@ Loading document...
 							</div>
 						</list-item>
 					</ng-container>
-					<div *ngIf="object.get('names').length<=1">
+					<div class="center"
+						*ngIf="object.get('names').length<=1">
 						Press + to add a nickname / epithet / alternate spelling / etc.
 					</div>
 				</hide-box>
@@ -213,20 +244,29 @@ Loading document...
 					<list-item *ngFor="let archetype of object.get('archetypes').asArray(); let iarc = index"
 						(delete)="object.get('archetypes').remove(iarc)">
 						<div class="double-stack-box">
-							<input class="fill-parent" [(ngModel)]="archetype.get(0).text"
-								placeholder="Name of lit term / archetype">
+							<select [(ngModel)]="archetype.get(0).text">
+								<option value="null">
+									--Select a Lit Term or Archetype--
+								</option>
+								<option *ngFor="let term of litTermsAndArchetypes"
+									[value]="term">
+									{{term}}
+								</option>
+							</select>
 							<br>
 							<expanding-text-area [(ngModel)]="archetype.get(1).text"
 								placeholder="Describe how the archetype is fulfilled. Add CITATIONS to show why your description is correct!">
 							</expanding-text-area>
 						</div>
 					</list-item>
-					<div *ngIf="object.get('archetypes').length==0">
+					<div class="center"
+						*ngIf="object.get('archetypes').length==0">
 						No one has added any lit terms or archetypes yet. Click the + button to add one!
 					</div>
 				</hide-box>
 			</hide-box>
-			<div *ngIf="getPath('objects').length==0">
+			<div class="center"
+				*ngIf="getPath('objects').length==0">
 				No one has added an object yet. Click the + button to add one!
 			</div>
 		</hide-box>
@@ -253,7 +293,8 @@ Loading document...
 							</div>
 						</list-item>
 					</ng-container>
-					<div *ngIf="place.get('names').length<=1">
+					<div class="center"
+						*ngIf="place.get('names').length<=1">
 						Press + to add a nickname / epithet / alternate spelling / etc.
 					</div>
 				</hide-box>
@@ -263,36 +304,39 @@ Loading document...
 						placeholder="Description">
 					</expanding-text-area>
 				</hide-box>
-				<!-- Relationships -->
+				<!-- Relations -->
 				<hide-box *ngIf="place.get('relations')" title="Relations To Other Places"
-					[extraButtons]="{p: createPushObjectButton(place.get('relations'), placeRefTemplate)}">
+					[extraButtons]="{p: createPushObjectButton(place.get('relations'), relationTemplate)}">
 					<list-item *ngFor="let relation of place.get('relations').asArray(); let irel = index"
-						(delete)="place.get('relations').remove(irel)">
+						(delete)="removePlaceRelation(place, irel)">
 						<div class="relation">
-							<select class="type" [(ngModel)]="relation.get(0).text">
+							<select class="type" [ngModel]="relation.get(0).text"
+								(ngModelChange)="setPlaceRelationType(place, relation, $event)">
 								<option value="null">
 									--Select a Relation Type--
 								</option>
-								<option *ngFor="let type of placeRelationTypes"
+								<option *ngFor="let type of global.placeRelationTypes"
 									[value]="type">
 									{{type}}
 								</option>
 							</select>
 							<br>
-							<select class="person" [(ngModel)]="relation.get(1).text">
+							<select class="person" [ngModel]="relation.get(1).text"
+								(ngModelChange)="setPlaceRelationTarget(place, relation, $event)">
 								<option value="null">
 									--Select a Place--
 								</option>
 								<ng-container *ngFor="let place of getPath('places').asArray()"> 
 									<option *ngIf="true"
-										[value]="place.get('names').get(0).get(0).id">
+										[value]="place.id">
 										{{place.get('names').get(0).get(0).text}}
 									</option>
 								</ng-container>
 							</select>
 						</div>
 					</list-item>
-					<div *ngIf="place.get('relations').length==0">
+					<div class="center"
+						*ngIf="place.get('relations').length==0">
 						No one has added any relations yet. Click the + button to add one!
 					</div>
 				</hide-box>
@@ -302,20 +346,29 @@ Loading document...
 					<list-item *ngFor="let archetype of place.get('archetypes').asArray(); let iarc = index"
 						(delete)="place.get('archetypes').remove(iarc)">
 						<div class="double-stack-box">
-							<input class="fill-parent" [(ngModel)]="archetype.get(0).text"
-								placeholder="Name of lit term / archetype">
+							<select [(ngModel)]="archetype.get(0).text">
+								<option value="null">
+									--Select a Lit Term or Archetype--
+								</option>
+								<option *ngFor="let term of litTermsAndArchetypes"
+									[value]="term">
+									{{term}}
+								</option>
+							</select>
 							<br>
 							<expanding-text-area [(ngModel)]="archetype.get(1).text"
 								placeholder="Describe how the archetype is fulfilled. Add CITATIONS to show why your description is correct!">
 							</expanding-text-area>
 						</div>
 					</list-item>
-					<div *ngIf="place.get('archetypes').length==0">
+					<div class="center"
+						*ngIf="place.get('archetypes').length==0">
 						No one has added any lit terms or archetypes yet. Click the + button to add one!
 					</div>
 				</hide-box>
 			</hide-box>
-			<div *ngIf="getPath('places').length==0">
+			<div class="center"
+				*ngIf="getPath('places').length==0">
 				No one has added a place yet. Click the + button to add one!
 			</div>
 		</hide-box>

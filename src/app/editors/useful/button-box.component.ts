@@ -20,10 +20,6 @@ export class ButtonBoxComponent {
 		return ButtonState;
 	}
 	
-	ngOnInit() {
-		window.console.log(this.buttons);
-	}
-	
 	ngAfterContentChecked() {
 		for(let i in this.buttons) {
 			if(!this.buttons[i].state) {

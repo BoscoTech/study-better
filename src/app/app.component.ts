@@ -17,7 +17,9 @@ const ViewTypes = {
 		CHOOSE: 4,
 		OPEN: 1,
 		CREATE: 2,
-		CREATING: 3
+		CREATING: 3,
+		EDIT: 4,
+		PRACTICE: 5
 }
 
 @Component
@@ -85,6 +87,11 @@ export class AppComponent implements OnInit
 		}
 	}
 	
+	onNomenclatureButtonPressed(): void {
+		this.viewType = ViewTypes.PRACTICE;
+		
+	}
+	
 	listFile(): void {
 		this.driveService.files.list({q: "mimeType='application/prs.study-better'"}).then((r: Response<FileListR>) => console.log(r.result));
 	}
@@ -123,6 +130,7 @@ export class AppComponent implements OnInit
 					return;
 				}
 			}
+			this.viewType = ViewTypes.EDIT;
 		} else {
 			let view = this.picker.createView(picker.ViewId.DOCS);
 			let mimeTypes = "none";

@@ -112,6 +112,7 @@ export namespace Formats {
 				}
 			} else if(c[0] == ChemType.PAREN) {
 				tr += "(" + c[3] + ")";
+				coefficient = false;
 			}
 		}
 		//If it exists, add the superscript to the end of the formula.

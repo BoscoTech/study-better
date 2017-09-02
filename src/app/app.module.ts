@@ -18,6 +18,8 @@ import { HideBoxComponent } from './editors/useful/hide-box.component';
 import { ButtonBoxComponent } from './editors/useful/button-box.component';
 import { ListItemComponent } from './editors/useful/list-item.component';
 import { ExpandingTextAreaComponent } from './editors/useful/expanding-text-area.component';
+import { NomQuizComponent } from './nom-quiz/nom-quiz.component';
+import { FormattedDisplayComponent } from './format/formatted-display.component';
 
 @NgModule
 ({
@@ -32,7 +34,9 @@ import { ExpandingTextAreaComponent } from './editors/useful/expanding-text-area
 		HideBoxComponent,
 		ButtonBoxComponent,
 		ListItemComponent,
-		ExpandingTextAreaComponent
+		ExpandingTextAreaComponent,
+		NomQuizComponent,
+		FormattedDisplayComponent
 	],
 	imports: 
 	[

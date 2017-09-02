@@ -8,6 +8,7 @@
 			<li><button (click)="onAccountButtonPressed()" class="header-button noselect">{{loginButtonText}}</button></li>
 			<li *ngIf="gapiService.ngSignedIn"><button (click)="viewType=ViewTypes.CREATE" class="header-button noselect">New File</button></li>
 			<li *ngIf="gapiService.ngSignedIn"><button (click)="openFile()" class="header-button noselect">Open File</button></li>
+			<li><button (click)="onNomenclatureButtonPressed()" class="header-button noselect">Practice Nomenclature</button></li>
 		</ul>
 	</div>
 </header>
@@ -87,5 +88,11 @@
 Creating File...
 </div>
 
-<fact-set-editor></fact-set-editor>
-<book-editor></book-editor>
+<div *ngIf="viewType===ViewTypes.PRACTICE">
+	<nom-quiz></nom-quiz>
+</div>
+
+<div *ngIf="viewType===ViewTypes.EDIT">
+	<fact-set-editor></fact-set-editor>
+	<book-editor></book-editor>
+</div>

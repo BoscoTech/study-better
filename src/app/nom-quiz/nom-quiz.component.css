@@ -1,0 +1,63 @@
+div#layout {
+	width: 25em;
+	height: auto;
+	display: grid;
+	grid-template-columns: 1em 1fr 1em;
+	grid-template-rows: 1em auto 1em auto 1em auto 1em auto 1em auto;
+}
+
+div#layout>span#question {
+	grid-row: 2;
+	grid-column: 2;
+	text-align: center;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+div#layout>span#qcard {
+	grid-row: 4;
+	grid-column: 2;
+	text-align: center;
+}
+
+div#layout>span#qcard>span#background {
+	background-color: #EEE;
+	border-radius: 8px;
+	display: inline-block;
+	padding: 0.5em;
+}
+
+div#layout>span#qcard>span#background>* {
+	display: inline-block;
+}
+
+div#layout>span#answer {
+	grid-row: 6;
+	grid-column: 2;
+	background-color: #EEE;
+	border-radius:8px;
+	display: inline-block;
+	height: 2.5em;
+}
+
+div#layout>span#answer>formatted-input {
+	width: 100%;
+}
+
+div#layout>button {
+	grid-row: 8;
+	grid-column: 2;
+}
+
+div#layout>span#feedback {
+	grid-row: 10;
+	grid-column: 2;
+}
+
+div#layout>span#feedback>span#problems {
+	color: #F22;
+}
+
+div#layout>span#feedback>span#correct {
+	color: #295;
+}

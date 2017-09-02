@@ -46,7 +46,7 @@ ul.header-buttons > li:last-child {
 .header-button {
 	padding: .5em 0;
 	width: 100%;
-	line-height: 2em;
+	line-height: 1em;
 	//border-left: 1px solid var(--text-primary-color);
 	//border-right: 1px solid var(--text-primary-color);
 	color: var(--text-primary-color);

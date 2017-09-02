@@ -1,0 +1,24 @@
+<div id="layout">
+	<span id="question">
+		{{question}}
+	</span>
+	<span id="qcard">
+		<span id="background">
+			<formatted-display *ngIf="formatQcard" [ngModel]="qcard" [formatter]="formatter"></formatted-display>
+			<ng-container *ngIf="!formatQcard">{{qcard}}</ng-container>
+		</span>
+	</span>
+	<span id="answer">
+		<formatted-input (keyup.enter)="onSubmitAnswer()" [(ngModel)]="answer" [formatter]="answerFormatter"></formatted-input>
+	</span>
+	<button *ngIf="!showFeedback" (click)="onSubmitAnswer()">Submit</button>
+	<button *ngIf="showFeedback" (click)="onNextQuestion()">Next Question</button>
+	<span *ngIf="showFeedback" id="feedback">
+		<span *ngIf="!answerCorrect" id="problems">
+			{{problems}}
+		</span>
+		<span *ngIf="answerCorrect" id="correct">
+			Correct!
+		</span>
+	</span>
+</div>
